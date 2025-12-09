@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts, useCategories } from '@/hooks/useProducts';
 import { ArrowRight, Star, Truck, Shield, Clock, Award } from 'lucide-react';
+import { ProductCard } from '@/components/products/ProductCard';
 
 const features = [
   {
@@ -120,41 +121,7 @@ const HomePage = () => {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {featuredProducts.map((product) => (
-                <Link
-                  key={product.id}
-                  to={`/product/${product.id}`}
-                  className="group bg-white rounded-xl overflow-hidden shadow-card hover:shadow-lg transition-shadow"
-                >
-                  <div className="aspect-square bg-earth-50 p-8">
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="w-full h-full object-contain group-hover:scale-105 transition-transform"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <div className="flex justify-between items-start mb-2">
-                      <span className="text-xs font-medium text-warm-600 bg-warm-50 px-2 py-1 rounded">
-                        {product.category}
-                      </span>
-                      <div className="flex items-center text-sm text-amber-500">
-                        <Star className="w-4 h-4 fill-current" />
-                        <span className="ml-1">{product.rating?.rate || 4.5}</span>
-                      </div>
-                    </div>
-                    <h3 className="font-semibold text-warm-800 mb-2 line-clamp-2">
-                      {product.title}
-                    </h3>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xl font-bold text-warm-700">
-                        ${product.price}
-                      </span>
-                      <button className="px-4 py-2 bg-warm-100 text-warm-700 rounded-lg text-sm font-medium hover:bg-warm-200 transition-colors">
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </Link>
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
           )}

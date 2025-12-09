@@ -18,6 +18,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
 
   return (
     <div
+      data-testid="product-card"
       className={cn(
         "group relative bg-white rounded-2xl border border-neutral-100 overflow-hidden transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1",
         className

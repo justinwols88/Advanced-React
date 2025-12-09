@@ -4,8 +4,8 @@ test.describe('E-commerce Application', () => {
   test('should display homepage with products', async ({ page }) => {
     await page.goto('/');
     
-    // Check if the hero section is visible
-    await expect(page.getByRole('heading', { name: /Welcome Home/i })).toBeVisible();
+    // Check if the hero section is visible with actual heading text
+    await expect(page.getByRole('heading', { name: /Welcome to/i })).toBeVisible();
     
     // Wait for products to load
     await page.waitForSelector('[data-testid="product-card"]', { timeout: 10000 });
@@ -69,8 +69,8 @@ test.describe('E-commerce Application', () => {
     // Check if we're on category page
     await expect(page).toHaveURL(/\/category\/electronics/);
     
-    // Check if category title is visible
-    await expect(page.getByRole('heading')).toBeVisible();
+    // Check if category heading is visible (be more specific)
+    await expect(page.getByRole('heading', { name: 'Category', level: 1 })).toBeVisible();
   });
 
   test('should filter and paginate products', async ({ page }) => {
@@ -99,15 +99,29 @@ test.describe('E-commerce Application', () => {
     await page.waitForSelector('a[href^="/product/"]', { timeout: 10000 });
     await page.click('a[href^="/product/"]:first-of-type');
     await page.waitForLoadState('networkidle');
+    
+    // Click add to cart button
     await page.getByRole('button', { name: /add to cart/i }).first().click();
     
-    // Go to cart
-    await page.goto('/cart');
+    // Wait for cart update and click the cart icon to go to cart page
+    await page.waitForTimeout(500);
+    const cartLink = page.locator('a[href="/cart"]').first();
+    await cartLink.click();
+    
+    // Wait for navigation and page load
+    await page.waitForURL('**/cart');
     await page.waitForLoadState('networkidle');
     
-    // Find quantity input or update buttons
-    const quantityControls = await page.locator('[type="number"], button[aria-label*="increase"], button[aria-label*="Increase"]').count();
-    expect(quantityControls).toBeGreaterThan(0);
+    // Verify we're on cart page with items (check for Shopping Cart heading)
+    await expect(page.getByRole('heading', { name: 'Shopping Cart' })).toBeVisible({ timeout: 10000 });
+    
+    // Find quantity controls
+    const increaseButton = page.getByRole('button', { name: 'Increase quantity' });
+    const decreaseButton = page.getByRole('button', { name: 'Decrease quantity' });
+    
+    // Verify controls exist
+    await expect(increaseButton).toBeVisible();
+    await expect(decreaseButton).toBeVisible();
   });
 
   test('should clear cart', async ({ page }) => {

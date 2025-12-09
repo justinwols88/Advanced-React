@@ -1,10 +1,11 @@
 import React from 'react';
-import type { CartItem } from '@/types/product.types';
+import type { CartItem as CartItemType } from '@/types/product.types';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useCart } from '@/hooks/useCart';
 import { clearCart, updateQuantity, removeFromCart } from '@/store/cartSlice';
 import { Button } from '@/components/common/Button';
+import { CartItem } from '@/components/cart/CartItem';
 
 
 const CartPage: React.FC = () => {
@@ -37,69 +38,8 @@ const CartPage: React.FC = () => {
         {/* Cart Items */}
         <div className="lg:w-2/3">
           <div className="bg-white rounded-lg shadow">
-            {items.map((item: CartItem) => (
-              <div key={item.id} className="p-6 border-b last:border-0">
-                <div className="flex gap-4">
-                  {/* Product Image */}
-                  <div className="w-24 h-24">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  
-                  {/* Product Info */}
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm mt-1">
-                      ${item.price.toFixed(2)} each
-                    </p>
-                    
-                    {/* Quantity Controls */}
-                    <div className="flex items-center gap-4 mt-4">
-                      <div className="flex items-center border rounded-lg">
-                        <button
-                          onClick={() => dispatch(updateQuantity({ 
-                            id: item.id, 
-                            quantity: item.quantity - 1 
-                          }))}
-                          className="px-3 py-1 hover:bg-gray-100"
-                          disabled={item.quantity <= 1}
-                        >
-                          -
-                        </button>
-                        <span className="px-3 py-1">{item.quantity}</span>
-                        <button
-                          onClick={() => dispatch(updateQuantity({ 
-                            id: item.id, 
-                            quantity: item.quantity + 1 
-                          }))}
-                          className="px-3 py-1 hover:bg-gray-100"
-                        >
-                          +
-                        </button>
-                      </div>
-                      
-                      <button
-                        onClick={() => dispatch(removeFromCart(item.id))}
-                        className="text-red-600 hover:text-red-700"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  </div>
-                  
-                  {/* Price */}
-                  <div className="text-right">
-                    <div className="text-xl font-bold text-gray-900">
-                      ${(item.price * item.quantity).toFixed(2)}
-                    </div>
-                  </div>
-                </div>
-              </div>
+            {items.map((item: CartItemType) => (
+              <CartItem key={item.id} item={item} />
             ))}
           </div>
         </div>
