@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts, useCategories } from '@/hooks/useProducts';
 import { ArrowRight, Star, Truck, Shield, Clock, Award } from 'lucide-react';
 import { ProductCard } from '@/components/products/ProductCard';
+import { CategoryDropdown } from '@/components/products/CategoryDropdown';
 
 const features = [
   {
@@ -28,7 +29,8 @@ const features = [
 ];
 
 const HomePage = () => {
-  const { data: products = [], isLoading } = useProducts();
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const { data: products = [], isLoading } = useProducts(selectedCategory || undefined);
   const { data: categories = [] } = useCategories();
 
   const featuredProducts = products.slice(0, 4);
@@ -83,20 +85,29 @@ const HomePage = () => {
       {/* Featured Products */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-end mb-10">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 gap-6">
             <div>
               <h2 className="text-3xl font-display font-bold text-warm-800 mb-2">
-                Featured Products
+                {selectedCategory ? 'Filtered Products' : 'Featured Products'}
               </h2>
-              <p className="text-neutral-600">Curated picks just for you</p>
+              <p className="text-neutral-600">
+                {selectedCategory ? `Showing products in ${selectedCategory}` : 'Curated picks just for you'}
+              </p>
             </div>
-            <Link
-              to="/products"
-              className="text-warm-600 hover:text-warm-700 font-medium flex items-center"
-            >
-              View all
-              <ArrowRight className="ml-1 w-4 h-4" />
-            </Link>
+            
+            <div className="flex items-center gap-4">
+              <CategoryDropdown 
+                selectedCategory={selectedCategory}
+                onCategoryChange={setSelectedCategory}
+              />
+              <Link
+                to="/products"
+                className="text-warm-600 hover:text-warm-700 font-medium flex items-center whitespace-nowrap"
+              >
+                View all
+                <ArrowRight className="ml-1 w-4 h-4" />
+              </Link>
+            </div>
           </div>
 
           {isLoading ? (
