@@ -2,14 +2,17 @@ import { test, expect } from '@playwright/test';
 
 test.describe('E-commerce Application', () => {
   test('should display homepage with products', async ({ page }) => {
-    // Wait for API response before navigating
+    // Set up response listener before navigation
+    const responsePromise = page.waitForResponse(
+      response => response.url().includes('fakestoreapi.com/products') && response.status() === 200,
+      { timeout: 30000 }
+    );
+    
+    // Navigate
     await page.goto('/', { waitUntil: 'networkidle' });
     
     // Wait for the products API call to complete
-    await page.waitForResponse(response => 
-      response.url().includes('fakestoreapi.com/products') && response.status() === 200,
-      { timeout: 30000 }
-    );
+    await responsePromise;
     
     // Check if the hero section is visible with actual heading text
     await expect(page.getByRole('heading', { name: /Welcome to/i })).toBeVisible();
@@ -23,13 +26,16 @@ test.describe('E-commerce Application', () => {
   });
 
   test('should navigate to product detail page', async ({ page }) => {
+    // Set up response listener before navigation
+    const responsePromise = page.waitForResponse(
+      response => response.url().includes('fakestoreapi.com/products') && response.status() === 200,
+      { timeout: 30000 }
+    );
+    
     await page.goto('/', { waitUntil: 'networkidle' });
     
     // Wait for the products API call to complete
-    await page.waitForResponse(response => 
-      response.url().includes('fakestoreapi.com/products') && response.status() === 200,
-      { timeout: 30000 }
-    );
+    await responsePromise;
     
     // Wait for products to load
     await page.waitForSelector('a[href^="/product/"]', { timeout: 15000 });
@@ -45,13 +51,16 @@ test.describe('E-commerce Application', () => {
   });
 
   test('should add product to cart', async ({ page }) => {
+    // Set up response listener before navigation
+    const responsePromise = page.waitForResponse(
+      response => response.url().includes('fakestoreapi.com/products') && response.status() === 200,
+      { timeout: 30000 }
+    );
+    
     await page.goto('/', { waitUntil: 'networkidle' });
     
     // Wait for the products API call to complete
-    await page.waitForResponse(response => 
-      response.url().includes('fakestoreapi.com/products') && response.status() === 200,
-      { timeout: 30000 }
-    );
+    await responsePromise;
     
     // Wait for products to load
     await page.waitForSelector('a[href^="/product/"]', { timeout: 15000 });
@@ -112,13 +121,16 @@ test.describe('E-commerce Application', () => {
   });
 
   test('should update cart quantities', async ({ page }) => {
+    // Set up response listener before navigation
+    const responsePromise = page.waitForResponse(
+      response => response.url().includes('fakestoreapi.com/products') && response.status() === 200,
+      { timeout: 30000 }
+    );
+    
     await page.goto('/', { waitUntil: 'networkidle' });
     
     // Wait for the products API call to complete
-    await page.waitForResponse(response => 
-      response.url().includes('fakestoreapi.com/products') && response.status() === 200,
-      { timeout: 30000 }
-    );
+    await responsePromise;
     
     // Add a product to cart
     await page.waitForSelector('a[href^="/product/"]', { timeout: 15000 });
@@ -150,13 +162,16 @@ test.describe('E-commerce Application', () => {
   });
 
   test('should clear cart', async ({ page }) => {
+    // Set up response listener before navigation
+    const responsePromise = page.waitForResponse(
+      response => response.url().includes('fakestoreapi.com/products') && response.status() === 200,
+      { timeout: 30000 }
+    );
+    
     await page.goto('/', { waitUntil: 'networkidle' });
     
     // Wait for the products API call to complete
-    await page.waitForResponse(response => 
-      response.url().includes('fakestoreapi.com/products') && response.status() === 200,
-      { timeout: 30000 }
-    );
+    await responsePromise;
     
     // Add a product to cart
     await page.waitForSelector('a[href^="/product/"]', { timeout: 15000 });
