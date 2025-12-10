@@ -3,7 +3,9 @@
 ## Environment Variables
 
 ### For Local Development
+
 Copy `.env.example` to `.env` (already done):
+
 ```bash
 cp .env.example .env
 ```
@@ -12,7 +14,7 @@ cp .env.example .env
 
 Add these in Vercel Dashboard → Settings → Environment Variables:
 
-```
+``` .env
 VITE_API_BASE_URL=https://fakestoreapi.com
 VITE_ENABLE_TRACING=false
 VITE_APP_NAME=StyleCart
@@ -25,7 +27,7 @@ VITE_ENABLE_DEV_TOOLS=false
 
 Add these in Netlify Dashboard → Site Settings → Environment Variables:
 
-```
+``` .env
 VITE_API_BASE_URL=https://fakestoreapi.com
 VITE_ENABLE_TRACING=false
 VITE_APP_NAME=StyleCart
@@ -37,6 +39,7 @@ VITE_ENABLE_DEV_TOOLS=false
 ## Quick Deploy
 
 ### Vercel (Recommended)
+
 1. Push code to GitHub
 2. Go to [vercel.com](https://vercel.com)
 3. Import your repository
@@ -44,6 +47,7 @@ VITE_ENABLE_DEV_TOOLS=false
 5. Deploy!
 
 ### Netlify
+
 1. Push code to GitHub
 2. Go to [netlify.com](https://netlify.com)
 3. "Add new site" → Import from Git
@@ -67,6 +71,7 @@ npm run test:e2e
 ## Post-Deployment
 
 After deployment, your site will be live at:
+
 - **Vercel**: `https://your-app-name.vercel.app`
 - **Netlify**: `https://your-app-name.netlify.app`
 

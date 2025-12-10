@@ -68,7 +68,7 @@ const HomePage = () => {
             <div className="relative">
               <div className="w-full h-64 md:h-96 rounded-2xl overflow-hidden shadow-card">
                 <img
-                  src="/src/Img/1.jpg"
+                  src="/images/1.jpg"
                   alt="Tech for sale"
                   className="w-full h-full object-cover"
                 />
