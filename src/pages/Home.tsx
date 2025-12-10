@@ -37,7 +37,7 @@ const HomePage = () => {
     <div className="min-h-screen bg-earth-50">
       {/* Hero Section with Image */}
       <section className="relative bg-gradient-to-r from-warm-500/10 to-sky-500/10">
-        <div className="container mx-auto px-4 py-16 md:py-24">
+        <div className="container mx-auto px-4 py-12 md:py-24">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-warm-800 mb-6">
