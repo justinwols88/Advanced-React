@@ -1,27 +1,45 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useProducts } from '@/hooks/useProducts';
+import { useCategories } from '@/hooks/useProducts';
+import { ChevronDown } from 'lucide-react';
 
-const CategoryPage = () => {
-  const { category } = useParams();
-  const { data: products = [] } = useProducts(category);
+interface CategoryDropdownProps {
+  selectedCategory: string;
+  onCategoryChange: (category: string) => void;
+}
+
+export const CategoryDropdown: React.FC<CategoryDropdownProps> = ({
+  selectedCategory,
+  onCategoryChange,
+}) => {
+  const { data: categories = [], isLoading } = useCategories();
+
+  if (isLoading) {
+    return <div className="text-sm text-gray-500">Loading categories...</div>;
+  }
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-warm-800 mb-8 capitalize">
-        {category}
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <div key={product.id} className="bg-white rounded-lg shadow p-4">
-            <img src={product.image} alt={product.title} className="w-full h-48 object-contain mb-4" />
-            <h3 className="font-semibold mb-2">{product.title}</h3>
-            <p className="text-warm-600 font-bold">${product.price}</p>
-          </div>
-        ))}
+    <div className="relative inline-block">
+      <label htmlFor="category-select" className="block text-sm font-medium text-gray-700 mb-2">
+        Filter by Category
+      </label>
+      <div className="relative">
+        <select
+          id="category-select"
+          value={selectedCategory}
+          onChange={(e) => onCategoryChange(e.target.value)}
+          className="appearance-none block w-full pl-4 pr-10 py-3 text-base border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-warm-500 focus:border-warm-500 bg-white hover:border-gray-400 transition-colors cursor-pointer"
+        >
+          <option value="">All Categories</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+          <ChevronDown className="h-5 w-5" />
+        </div>
       </div>
     </div>
   );
 };
-
-export default CategoryPage;
