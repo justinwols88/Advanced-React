@@ -52,7 +52,28 @@ export const getProductsByCategory = async (
   totalProducts: number;
   totalPages: number;
 }> => {
-  const products = await getProducts(categoryId);
+  let products = await getProducts(categoryId);
+  
+  // Apply sorting
+  switch (sortBy) {
+    case 'price-low':
+      products = [...products].sort((a, b) => a.price - b.price);
+      break;
+    case 'price-high':
+      products = [...products].sort((a, b) => b.price - a.price);
+      break;
+    case 'rating':
+      products = [...products].sort((a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0));
+      break;
+    case 'newest':
+      // For newest, reverse the array (assuming API returns oldest first)
+      products = [...products].reverse();
+      break;
+    case 'featured':
+    default:
+      // Keep original order for featured
+      break;
+  }
   
   const category: Category = {
     id: categoryId,
