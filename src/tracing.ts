@@ -53,14 +53,11 @@ if (!isTestEnv && !isVitest) {
         }),
       ],
     });
+    
+    console.log('✅ OpenTelemetry tracing initialized');
   } catch (error) {
-    console.error('Failed to initialize tracing:', error);
+    console.warn('⚠️ Tracing initialization failed (app will continue):', error);
   }
-}
-
-  console.log('✅ OpenTelemetry tracing initialized');
-} catch (error) {
-  console.warn('⚠️ Tracing initialization failed (app will continue):', error);
 }
 
 export default {};
