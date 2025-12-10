@@ -129,29 +129,21 @@ const footerLinks = [
     links: [
       { name: 'All Products', href: '/products' },
       { name: 'New Arrivals', href: '/new' },
-      { name: 'Best Sellers', href: '/bestsellers' },
-      { name: 'Sale', href: '/sale' },
-      { name: 'Gift Cards', href: '/gift-cards' }
+      { name: 'Best Sellers', href: '/bestsellers' }
     ]
   },
   {
     title: 'Company',
     links: [
       { name: 'About Us', href: '/about' },
-      { name: 'Careers', href: '/careers' },
-      { name: 'Press', href: '/press' },
-      { name: 'Blog', href: '/blog' },
-      { name: 'Affiliates', href: '/affiliates' }
+      { name: 'Careers', href: '/careers' }
     ]
   },
   {
     title: 'Support',
     links: [
       { name: 'Help Center', href: '/help' },
-      { name: 'Contact Us', href: '/contact' },
-      { name: 'Shipping Info', href: '/shipping' },
-      { name: 'Returns', href: '/returns' },
-      { name: 'Size Guide', href: '/size-guide' }
+      { name: 'Contact Us', href: '/contact' }
     ]
   }
 ];
