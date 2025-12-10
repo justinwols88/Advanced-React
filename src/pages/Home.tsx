@@ -33,7 +33,8 @@ const HomePage = () => {
   const { data: products = [], isLoading } = useProducts(selectedCategory || undefined);
   const { data: categories = [] } = useCategories();
 
-  const featuredProducts = products.slice(0, 4);
+  // Show only 4 products when no category is selected, show all when filtered
+  const displayProducts = selectedCategory ? products : products.slice(0, 4);
 
   return (
     <div className="min-h-screen bg-earth-50">
@@ -112,9 +113,13 @@ const HomePage = () => {
 
           {isLoading ? (
             <div className="text-center py-12">Loading products...</div>
+          ) : displayProducts.length === 0 ? (
+            <div className="text-center py-12 text-gray-500">
+              No products found in this category.
+            </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {featuredProducts.map((product) => (
+              {displayProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
