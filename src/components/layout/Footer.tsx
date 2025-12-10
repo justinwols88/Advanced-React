@@ -40,12 +40,12 @@ const Footer = () => {
                 <ShoppingBag className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h2 className="text-2xl font-display font-bold">Justin Wold"s</h2>
+                <h2 className="text-2xl font-display font-bold">Justin Wold's</h2>
                 <p className="text-neutral-400 text-sm">Premium Tech Experience</p>
               </div>
             </Link>
             <p className="text-neutral-400 mb-6">
-              Discover amazing products with premium quality. We're dedicated to providing the best shopping experience.
+              Discover amazing products with premium quality. We're dedicated to providing the best customer experience and top-notch service.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social) => (
@@ -131,29 +131,6 @@ const Footer = () => {
   );
 };
 
-// Data
-const features = [
-  {
-    icon: <Truck className="w-6 h-6 text-primary-400" />,
-    title: 'Free Shipping',
-    description: 'On orders over $50'
-  },
-  {
-    icon: <CreditCard className="w-6 h-6 text-primary-400" />,
-    title: 'Secure Payment',
-    description: '100% secure transactions'
-  },
-  {
-    icon: <Shield className="w-6 h-6 text-primary-400" />,
-    title: '30-Day Returns',
-    description: 'Easy return policy'
-  },
-  {
-    icon: <Phone className="w-6 h-6 text-primary-400" />,
-    title: '24/7 Support',
-    description: 'Dedicated customer service'
-  }
-];
 
 const socialLinks = [
   { name: 'Facebook', icon: <Facebook className="w-5 h-5" />, href: '#' },
