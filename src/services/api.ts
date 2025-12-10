@@ -1,7 +1,7 @@
 // src/services/api.ts
 import type { Product } from '@/types/product.types';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://fakestoreapi.com';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://fakestoreapi.com/products';
 
 interface Category {
   id: string;
