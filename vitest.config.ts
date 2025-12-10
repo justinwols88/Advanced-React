@@ -17,6 +17,9 @@ export default defineConfig({
         inline: ['@opentelemetry/api'],
       },
     },
+    env: {
+      NODE_ENV: 'test',
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
