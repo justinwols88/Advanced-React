@@ -52,7 +52,10 @@ export const getProductsByCategory = async (
   totalProducts: number;
   totalPages: number;
 }> => {
+  console.log('getProductsByCategory called with:', { categoryId, page, sortBy });
+  
   let products = await getProducts(categoryId);
+  console.log('getProducts returned:', products.length, 'products');
   
   // Apply sorting
   switch (sortBy) {
@@ -83,12 +86,16 @@ export const getProductsByCategory = async (
     productCount: products.length
   };
   
-  return {
+  const result = {
     category,
     products,
     totalProducts: products.length,
     totalPages: Math.ceil(products.length / 12)
   };
+  
+  console.log('getProductsByCategory returning:', result);
+  
+  return result;
 };
 
 // Export api object for hooks
