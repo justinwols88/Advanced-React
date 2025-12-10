@@ -1,12 +1,11 @@
 // src/pages/CategoryPage.tsx
 import React from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useProducts } from '@/hooks/useProducts';
 import { ProductGrid } from '@/components/products/ProductGrid';
 import FilterSidebar from '@/components/FilterSidebar';
 import Pagination from '@/components/Pagination';
 import Breadcrumb from '@/components/Breadcrumb';
-import { getProductsByCategory } from '@/services/api';
 import { Filter, Grid, List, ChevronDown } from 'lucide-react';
 
 const CategoryPage: React.FC = () => {
@@ -17,11 +16,25 @@ const CategoryPage: React.FC = () => {
   const sortBy = searchParams.get('sort') || 'featured';
   const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid');
   
-  const { data: categoryData, isLoading, error } = useQuery({
-    queryKey: ['category', categoryId, page, sortBy],
-    queryFn: () => getProductsByCategory(categoryId!, page, sortBy),
-    enabled: !!categoryId,
-  });
+  // Use the same hook that works on Home page
+  const { data: allProducts = [], isLoading, error } = useProducts(categoryId);
+  
+  // Apply sorting
+  let products = [...allProducts];
+  switch (sortBy) {
+    case 'price-low':
+      products.sort((a, b) => a.price - b.price);
+      break;
+    case 'price-high':
+      products.sort((a, b) => b.price - a.price);
+      break;
+    case 'rating':
+      products.sort((a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0));
+      break;
+    case 'newest':
+      products.reverse();
+      break;
+  }
 
   const handleSortChange = (newSort: string) => {
     const params = new URLSearchParams(searchParams);
@@ -61,11 +74,10 @@ const CategoryPage: React.FC = () => {
     );
   }
 
-  const category = categoryData?.category;
-  const products = categoryData?.products || [];
-  const totalPages = categoryData?.totalPages || 1;
+  const categoryName = categoryId ? categoryId.charAt(0).toUpperCase() + categoryId.slice(1) : 'Category';
+  const totalPages = Math.ceil(products.length / 12);
 
-  console.log('CategoryPage render:', { categoryId, categoryData, products: products.length });
+  console.log('CategoryPage render:', { categoryId, products: products.length });
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -73,21 +85,18 @@ const CategoryPage: React.FC = () => {
       <Breadcrumb 
         items={[
           { label: 'Home', href: '/' },
-          { label: 'Shop', href: '/shop' },
-          { label: category?.name || 'Category', href: '#' }
+          { label: categoryName, href: '#' }
         ]} 
       />
       
       {/* Page Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          {category?.name || 'Category'}
+          {categoryName}
         </h1>
-        {category?.description && (
-          <p className="text-gray-600">{category.description}</p>
-        )}
+        <p className="text-gray-600">Browse our collection of {categoryId} products</p>
         <p className="text-gray-500 mt-2">
-          {categoryData?.totalProducts || 0} products
+          {products.length} products
         </p>
       </div>
 

@@ -101,13 +101,15 @@ const HomePage = () => {
                 selectedCategory={selectedCategory}
                 onCategoryChange={setSelectedCategory}
               />
-              <Link
-                to="/products"
-                className="text-warm-600 hover:text-warm-700 font-medium flex items-center whitespace-nowrap"
-              >
-                View all
-                <ArrowRight className="ml-1 w-4 h-4" />
-              </Link>
+              {selectedCategory && (
+                <button
+                  onClick={() => setSelectedCategory('')}
+                  className="text-warm-600 hover:text-warm-700 font-medium flex items-center whitespace-nowrap"
+                >
+                  View all
+                  <ArrowRight className="ml-1 w-4 h-4" />
+                </button>
+              )}
             </div>
           </div>
 
