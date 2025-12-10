@@ -35,7 +35,7 @@ const Header: React.FC = () => {
               </div>
               <div>
                 <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                  StyleCart
+                  Tech Gear!
                 </span>
                 <p className="text-xs text-gray-500">Premium Shopping</p>
               </div>

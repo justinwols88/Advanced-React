@@ -110,31 +110,6 @@ const HomePage = () => {
           )}
         </div>
       </section>
-
-      {/* Categories */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-display font-bold text-center text-warm-800 mb-12">
-            Shop by Category
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {categories.slice(0, 4).map((category) => (
-              <Link
-                key={category.id}
-                to={`/category/${category.id}`}
-                className="group relative rounded-xl overflow-hidden shadow-card hover:shadow-lg transition-all"
-              >
-                <div className="aspect-square bg-gradient-to-br from-warm-100 to-sky-100 flex items-center justify-center">
-                  <span className="text-lg font-semibold text-warm-800 capitalize">
-                    {category.name}
-                  </span>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
