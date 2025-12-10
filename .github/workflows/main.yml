@@ -23,31 +23,24 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: 'my-store/package-lock.json'
     
     - name: Install dependencies
-      working-directory: ./my-store
       run: npm ci
     
     - name: Run linter
-      working-directory: ./my-store
       run: npm run lint --if-present
       continue-on-error: true
     
     - name: Run unit tests
-      working-directory: ./my-store
       run: npm test -- --run
     
     - name: Build project
-      working-directory: ./my-store
       run: npm run build
     
     - name: Install Playwright browsers
-      working-directory: ./my-store
       run: npx playwright install --with-deps
     
     - name: Run E2E tests
-      working-directory: ./my-store
       run: npm run test:e2e
     
     - name: Upload test results
@@ -55,7 +48,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: playwright-report-${{ matrix.node-version }}
-        path: my-store/playwright-report/
+        path: playwright-report/
         retention-days: 30
     
     - name: Upload build artifacts
@@ -63,7 +56,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: dist
-        path: my-store/dist/
+        path: dist/
         retention-days: 7
 
   deploy:
@@ -81,13 +74,10 @@ jobs:
       with:
         node-version: '20.x'
         cache: 'npm'
-        cache-dependency-path: 'my-store/package-lock.json'
     
     - name: Install dependencies
-      working-directory: ./my-store
       run: npm ci
     
     - name: Build for production
-      working-directory: ./my-store
       run: npm run build
     
