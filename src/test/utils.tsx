@@ -41,7 +41,9 @@ const AllTheProviders = ({ children }: AllTheProvidersProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <MemoryRouter>{children}</MemoryRouter>
+        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          {children}
+        </MemoryRouter>
       </Provider>
     </QueryClientProvider>
   );
