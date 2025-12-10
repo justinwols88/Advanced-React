@@ -21,6 +21,8 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
             <Link
               to={item.href}
               className="flex items-center text-gray-500 hover:text-gray-700"
+              aria-label="Home"
+              title="Go to home page"
             >
               <Home size={16} />
             </Link>
