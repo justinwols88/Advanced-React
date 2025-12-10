@@ -37,6 +37,8 @@ const Footer = () => {
                 <a
                   key={social.name}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-neutral-800 hover:bg-primary-600 flex items-center justify-center transition-colors"
                   aria-label={social.name}
                 >
@@ -117,33 +119,35 @@ const features = [
 ];
 
 const socialLinks = [
-  { name: 'Facebook', icon: <Facebook className="w-5 h-5" />, href: '#' },
-  { name: 'Twitter', icon: <Twitter className="w-5 h-5" />, href: '#' },
-  { name: 'Instagram', icon: <Instagram className="w-5 h-5" />, href: '#' },
-  { name: 'YouTube', icon: <Youtube className="w-5 h-5" />, href: '#' }
+  { name: 'Facebook', icon: <Facebook className="w-5 h-5" />, href: 'https://facebook.com' },
+  { name: 'Twitter', icon: <Twitter className="w-5 h-5" />, href: 'https://twitter.com' },
+  { name: 'Instagram', icon: <Instagram className="w-5 h-5" />, href: 'https://instagram.com' },
+  { name: 'YouTube', icon: <Youtube className="w-5 h-5" />, href: 'https://youtube.com' }
 ];
 
 const footerLinks = [
   {
     title: 'Shop',
     links: [
-      { name: 'All Products', href: '/products' },
-      { name: 'New Arrivals', href: '/new' },
-      { name: 'Best Sellers', href: '/bestsellers' }
+      { name: 'All Products', href: '/' },
+      { name: 'Electronics', href: '/category/electronics' },
+      { name: 'Jewelry', href: '/category/jewelery' },
+      { name: "Men's Clothing", href: "/category/men's clothing" },
+      { name: "Women's Clothing", href: "/category/women's clothing" }
     ]
   },
   {
-    title: 'Company',
+    title: 'Quick Links',
     links: [
-      { name: 'About Us', href: '/about' },
-      { name: 'Careers', href: '/careers' }
+      { name: 'Home', href: '/' },
+      { name: 'Shopping Cart', href: '/cart' }
     ]
   },
   {
     title: 'Support',
     links: [
-      { name: 'Help Center', href: '/help' },
-      { name: 'Contact Us', href: '/contact' }
+      { name: 'Help Center', href: '/' },
+      { name: 'Contact Us', href: '/' }
     ]
   }
 ];
