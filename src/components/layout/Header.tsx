@@ -14,8 +14,8 @@ const Header: React.FC = () => {
     { name: 'Home', href: '/' },
     { name: 'Electronics', href: '/category/electronics' },
     { name: 'Jewelery', href: '/category/jewelery' },
-    { name: "Men's Clothing", href: '/category/men\'s clothing' },
-    { name: "Women's Clothing", href: '/category/women\'s clothing' },
+    { name: "Men's Clothing", href: "/category/men's clothing" },
+    { name: "Women's Clothing", href: "/category/women's clothing" },
   ];
 
   const isActive = (path: string) => {
