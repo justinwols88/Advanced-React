@@ -2,13 +2,20 @@ import { test, expect } from '@playwright/test';
 
 test.describe('E-commerce Application', () => {
   test('should display homepage with products', async ({ page }) => {
-    await page.goto('/');
+    // Wait for API response before navigating
+    await page.goto('/', { waitUntil: 'networkidle' });
+    
+    // Wait for the products API call to complete
+    await page.waitForResponse(response => 
+      response.url().includes('fakestoreapi.com/products') && response.status() === 200,
+      { timeout: 30000 }
+    );
     
     // Check if the hero section is visible with actual heading text
     await expect(page.getByRole('heading', { name: /Welcome to/i })).toBeVisible();
     
     // Wait for products to load
-    await page.waitForSelector('[data-testid="product-card"]', { timeout: 10000 });
+    await page.waitForSelector('[data-testid="product-card"]', { timeout: 15000 });
     
     // Check if products are displayed
     const products = await page.locator('[data-testid="product-card"]').count();
@@ -16,10 +23,16 @@ test.describe('E-commerce Application', () => {
   });
 
   test('should navigate to product detail page', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'networkidle' });
+    
+    // Wait for the products API call to complete
+    await page.waitForResponse(response => 
+      response.url().includes('fakestoreapi.com/products') && response.status() === 200,
+      { timeout: 30000 }
+    );
     
     // Wait for products to load
-    await page.waitForSelector('a[href^="/product/"]', { timeout: 10000 });
+    await page.waitForSelector('a[href^="/product/"]', { timeout: 15000 });
     
     // Click on first product
     await page.click('a[href^="/product/"]:first-of-type');
@@ -32,10 +45,16 @@ test.describe('E-commerce Application', () => {
   });
 
   test('should add product to cart', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'networkidle' });
+    
+    // Wait for the products API call to complete
+    await page.waitForResponse(response => 
+      response.url().includes('fakestoreapi.com/products') && response.status() === 200,
+      { timeout: 30000 }
+    );
     
     // Wait for products to load
-    await page.waitForSelector('a[href^="/product/"]', { timeout: 10000 });
+    await page.waitForSelector('a[href^="/product/"]', { timeout: 15000 });
     
     // Go to first product
     await page.click('a[href^="/product/"]:first-of-type');
@@ -57,10 +76,10 @@ test.describe('E-commerce Application', () => {
   });
 
   test('should navigate between categories', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'networkidle' });
     
     // Wait for categories to load
-    await page.waitForSelector('a[href^="/category/"]', { timeout: 10000 });
+    await page.waitForSelector('a[href^="/category/"]', { timeout: 15000 });
     
     // Click on electronics category
     const electronicsLink = page.locator('a[href*="electronics"]').first();
@@ -93,10 +112,16 @@ test.describe('E-commerce Application', () => {
   });
 
   test('should update cart quantities', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'networkidle' });
+    
+    // Wait for the products API call to complete
+    await page.waitForResponse(response => 
+      response.url().includes('fakestoreapi.com/products') && response.status() === 200,
+      { timeout: 30000 }
+    );
     
     // Add a product to cart
-    await page.waitForSelector('a[href^="/product/"]', { timeout: 10000 });
+    await page.waitForSelector('a[href^="/product/"]', { timeout: 15000 });
     await page.click('a[href^="/product/"]:first-of-type');
     await page.waitForLoadState('networkidle');
     
@@ -125,10 +150,16 @@ test.describe('E-commerce Application', () => {
   });
 
   test('should clear cart', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'networkidle' });
+    
+    // Wait for the products API call to complete
+    await page.waitForResponse(response => 
+      response.url().includes('fakestoreapi.com/products') && response.status() === 200,
+      { timeout: 30000 }
+    );
     
     // Add a product to cart
-    await page.waitForSelector('a[href^="/product/"]', { timeout: 10000 });
+    await page.waitForSelector('a[href^="/product/"]', { timeout: 15000 });
     await page.click('a[href^="/product/"]:first-of-type');
     await page.waitForLoadState('networkidle');
     await page.getByRole('button', { name: /add to cart/i }).first().click();
