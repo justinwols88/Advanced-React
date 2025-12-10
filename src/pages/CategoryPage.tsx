@@ -1,6 +1,6 @@
 // src/pages/CategoryPage.tsx
 import React from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { ProductGrid } from '@/components/products/ProductGrid';
 import FilterSidebar from '@/components/FilterSidebar';
@@ -11,7 +11,8 @@ import { Filter, Grid, List, ChevronDown } from 'lucide-react';
 
 const CategoryPage: React.FC = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const page = parseInt(searchParams.get('page') || '1');
   const sortBy = searchParams.get('sort') || 'featured';
   const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid');
@@ -21,6 +22,12 @@ const CategoryPage: React.FC = () => {
     queryFn: () => getProductsByCategory(categoryId!, page, sortBy),
     enabled: !!categoryId,
   });
+
+  const handleSortChange = (newSort: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('sort', newSort);
+    setSearchParams(params);
+  };
 
   if (isLoading) {
     return (
@@ -91,14 +98,19 @@ const CategoryPage: React.FC = () => {
               </button>
               
               <div className="relative">
-                <select className="appearance-none px-4 py-2 border border-gray-300 rounded-lg bg-white pr-8 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Sort products">
+                <select 
+                  value={sortBy}
+                  onChange={(e) => handleSortChange(e.target.value)}
+                  className="appearance-none px-4 py-2 border border-gray-300 rounded-lg bg-white pr-8 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer" 
+                  aria-label="Sort products"
+                >
                   <option value="featured">Featured</option>
                   <option value="price-low">Price: Low to High</option>
                   <option value="price-high">Price: High to Low</option>
                   <option value="newest">Newest Arrivals</option>
                   <option value="rating">Highest Rated</option>
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" size={16} />
               </div>
             </div>
             
@@ -134,8 +146,11 @@ const CategoryPage: React.FC = () => {
               <Pagination 
                 currentPage={page}
                 totalPages={totalPages}
-                onPageChange={(page) => {
-                  // Handle page change
+                onPageChange={(newPage) => {
+                  const params = new URLSearchParams(searchParams);
+                  params.set('page', newPage.toString());
+                  setSearchParams(params);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
               />
             </div>
