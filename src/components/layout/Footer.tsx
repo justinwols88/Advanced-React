@@ -65,32 +65,6 @@ const Footer = () => {
             </div>
           ))}
 
-          {/* Newsletter */}
-          <div>
-            <h3 className="font-display font-semibold text-lg mb-4">Stay Informed!</h3>
-            <p className="text-neutral-400 text-sm mb-4">
-              Subscribe to our newsletter for the latest updates and offers.
-            </p>
-            <form className="space-y-3">
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400" />
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="w-full pl-10 pr-4 py-3 bg-neutral-800 border border-neutral-700 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none text-white"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
       {/* Bottom Bar */}
       <div className="border-t border-neutral-800">
         <div className="container mx-auto px-4 py-6">
