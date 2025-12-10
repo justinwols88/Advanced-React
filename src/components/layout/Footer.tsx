@@ -12,21 +12,6 @@ const Footer = () => {
       {/* Top Features */}
       <div className="border-b border-neutral-800">
         <div className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature) => (
-              <div key={feature.title} className="flex items-start space-x-4">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500/20 to-secondary-500/20 flex items-center justify-center">
-                    {feature.icon}
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-display font-semibold text-lg mb-1">{feature.title}</h3>
-                  <p className="text-neutral-400 text-sm">{feature.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -109,7 +94,7 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="border-t border-neutral-800">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="flex flex-col md:fleax-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-neutral-400 text-sm">
               © 2025 This E-Commerce Store, was hand crafted with care and detail by Justin Wold.
             </p>
@@ -131,6 +116,29 @@ const Footer = () => {
   );
 };
 
+// Data
+const features = [
+  {
+    icon: <Truck className="w-6 h-6 text-primary-400" />,
+    title: 'Free Shipping',
+    description: 'On orders over $50'
+  },
+  {
+    icon: <CreditCard className="w-6 h-6 text-primary-400" />,
+    title: 'Secure Payment',
+    description: '100% secure transactions'
+  },
+  {
+    icon: <Shield className="w-6 h-6 text-primary-400" />,
+    title: '30-Day Returns',
+    description: 'Easy return policy'
+  },
+  {
+    icon: <Phone className="w-6 h-6 text-primary-400" />,
+    title: '24/7 Support',
+    description: 'Dedicated customer service'
+  }
+];
 
 const socialLinks = [
   { name: 'Facebook', icon: <Facebook className="w-5 h-5" />, href: '#' },
