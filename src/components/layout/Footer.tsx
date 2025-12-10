@@ -29,7 +29,7 @@ const Footer = () => {
                 <p className="text-neutral-400 text-sm">Premium Tech Experience</p>
               </div>
             </Link>
-            <p className="text-neutral-400 mb-6">
+            <p className="text-neutral-400 text-base leading-relaxed mb-6">
               Discover amazing products with premium quality. We're dedicated to providing the best customer experience and top-notch service.
             </p>
             <div className="flex space-x-4">
@@ -51,13 +51,13 @@ const Footer = () => {
           {/* Links */}
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h3 className="font-display font-semibold text-lg mb-4">{section.title}</h3>
+              <h3 className="font-display font-semibold text-xl mb-5">{section.title}</h3>
               <ul className="space-y-3">
                 {section.links.map((link) => (
                   <li key={link.name}>
                     <Link
                       to={link.href}
-                      className="text-neutral-400 hover:text-white transition-colors text-sm"
+                      className="text-neutral-400 hover:text-white transition-colors text-base"
                     >
                       {link.name}
                     </Link>
@@ -72,11 +72,11 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="border-t border-neutral-800">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:fleax-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-neutral-400 text-sm">
-              © 2025 This E-Commerce Store, was hand crafted with care and detail by Justin Wold.
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p className="text-neutral-400 text-base text-center md:text-left">
+              © 2025 This E-Commerce Store was hand-crafted with care and detail by Justin Wold.
             </p>
-            <div className="flex items-center space-x-6 text-sm text-neutral-400">
+            <div className="flex items-center space-x-6 text-base text-neutral-400">
               <Link to="/privacy" className="hover:text-white transition-colors">
                 Privacy Policy
               </Link>
@@ -119,10 +119,10 @@ const features = [
 ];
 
 const socialLinks = [
-  { name: 'Facebook', icon: <Facebook className="w-5 h-5" />, href: 'https://facebook.com' },
-  { name: 'Twitter', icon: <Twitter className="w-5 h-5" />, href: 'https://twitter.com' },
-  { name: 'Instagram', icon: <Instagram className="w-5 h-5" />, href: 'https://instagram.com' },
-  { name: 'YouTube', icon: <Youtube className="w-5 h-5" />, href: 'https://youtube.com' }
+  { name: 'Facebook', icon: <Facebook className="w-5 h-5" />, href: 'https://www.facebook.com' },
+  { name: 'Twitter', icon: <Twitter className="w-5 h-5" />, href: 'https://www.twitter.com' },
+  { name: 'Instagram', icon: <Instagram className="w-5 h-5" />, href: 'https://www.instagram.com' },
+  { name: 'YouTube', icon: <Youtube className="w-5 h-5" />, href: 'https://www.youtube.com' }
 ];
 
 const footerLinks = [
