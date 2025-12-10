@@ -32,6 +32,6 @@ function App() {
       </Provider>
     </QueryClientProvider>
   );
-}
+} 
 
 export default App;
