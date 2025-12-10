@@ -1,9 +1,5 @@
-// Initialize tracing first, before any other imports (skip in test environment)
-if (typeof process === 'undefined' || process.env.NODE_ENV !== 'test') {
-  if (!import.meta.env.VITEST && !import.meta.env.MODE?.includes('test')) {
-    await import('./tracing');
-  }
-}
+// Initialize tracing first, before any other imports
+import './tracing';
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';

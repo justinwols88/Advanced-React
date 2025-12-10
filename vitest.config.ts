@@ -8,17 +8,21 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
-    exclude: ['**/node_modules/**', '**/e2e/**', '**/App.test.tsx'],
+    exclude: ['**/node_modules/**', '**/e2e/**', '**/App.test.tsx', '**/tracing.ts'],
     css: true,
     testTimeout: 10000,
     hookTimeout: 10000,
     server: {
       deps: {
         inline: ['@opentelemetry/api'],
+        exclude: ['@opentelemetry/sdk-trace-web', '@opentelemetry/exporter-trace-otlp-http'],
       },
     },
     env: {
       NODE_ENV: 'test',
+    },
+    alias: {
+      './tracing': path.resolve(__dirname, './src/test/mock-tracing.ts'),
     },
     coverage: {
       provider: 'v8',
