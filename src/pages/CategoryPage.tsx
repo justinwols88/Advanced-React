@@ -17,7 +17,7 @@ const CategoryPage: React.FC = () => {
   const sortBy = searchParams.get('sort') || 'featured';
   const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid');
   
-  const { data: categoryData, isLoading } = useQuery({
+  const { data: categoryData, isLoading, error } = useQuery({
     queryKey: ['category', categoryId, page, sortBy],
     queryFn: () => getProductsByCategory(categoryId!, page, sortBy),
     enabled: !!categoryId,
@@ -51,9 +51,21 @@ const CategoryPage: React.FC = () => {
     );
   }
 
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center text-red-600">
+          <p>Error loading category: {(error as Error).message}</p>
+        </div>
+      </div>
+    );
+  }
+
   const category = categoryData?.category;
   const products = categoryData?.products || [];
   const totalPages = categoryData?.totalPages || 1;
+
+  console.log('CategoryPage render:', { categoryId, categoryData, products: products.length });
 
   return (
     <div className="container mx-auto px-4 py-8">
