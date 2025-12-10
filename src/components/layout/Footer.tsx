@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
+import {
   ShoppingBag, CreditCard, Truck, Shield, 
   Facebook, Twitter, Instagram, Youtube, 
   Mail, Phone, MapPin
@@ -40,8 +40,8 @@ const Footer = () => {
                 <ShoppingBag className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h2 className="text-2xl font-display font-bold">StyleCart</h2>
-                <p className="text-neutral-400 text-sm">Premium Shopping Experience</p>
+                <h2 className="text-2xl font-display font-bold">Justin Wold"s</h2>
+                <p className="text-neutral-400 text-sm">Premium Tech Experience</p>
               </div>
             </Link>
             <p className="text-neutral-400 mb-6">
