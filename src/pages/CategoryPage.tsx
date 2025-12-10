@@ -135,10 +135,16 @@ const CategoryPage: React.FC = () => {
           </div>
 
           {/* Products Grid */}
-          <ProductGrid 
-            products={products} 
-            viewMode={viewMode}
-          />
+          {products.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">No products found in this category.</p>
+            </div>
+          ) : (
+            <ProductGrid 
+              products={products} 
+              viewMode={viewMode}
+            />
+          )}
 
           {/* Pagination */}
           {totalPages > 1 && (
