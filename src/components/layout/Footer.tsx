@@ -64,6 +64,8 @@ const Footer = () => {
               </ul>
             </div>
           ))}
+        </div>
+      </div>
 
       {/* Bottom Bar */}
       <div className="border-t border-neutral-800">
