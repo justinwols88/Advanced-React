@@ -59,7 +59,7 @@ const HomePage = () => {
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
                 <Link
-                  to="/category/men's clothing"
+                  to="/category/jewelery"
                   className="inline-flex items-center px-6 py-3 border-2 border-warm-500 text-warm-600 font-medium rounded-lg hover:bg-warm-50 transition-colors"
                 >
                   Browse Collection
