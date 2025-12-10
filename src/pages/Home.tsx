@@ -4,6 +4,29 @@ import { useProducts, useCategories } from '@/hooks/useProducts';
 import { ArrowRight, Star, Truck, Shield, Clock, Award } from 'lucide-react';
 import { ProductCard } from '@/components/products/ProductCard';
 
+const features = [
+  {
+    name: 'Free Shipping',
+    description: 'On orders over $50',
+    icon: <Truck className="w-6 h-6 text-warm-600" />,
+  },
+  {
+    name: 'Secure Payment',
+    description: '100% protected',
+    icon: <Shield className="w-6 h-6 text-warm-600" />,
+  },
+  {
+    name: 'Fast Delivery',
+    description: '2-3 business days',
+    icon: <Clock className="w-6 h-6 text-warm-600" />,
+  },
+  {
+    name: 'Quality Guarantee',
+    description: 'Certified products',
+    icon: <Award className="w-6 h-6 text-warm-600" />,
+  },
+];
+
 const HomePage = () => {
   const { data: products = [], isLoading } = useProducts();
   const { data: categories = [] } = useCategories();
@@ -53,23 +76,6 @@ const HomePage = () => {
               <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-sky-500/20 rounded-full blur-3xl" />
               <div className="absolute -top-6 -left-6 w-48 h-48 bg-warm-500/20 rounded-full blur-3xl" />
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="py-12 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {features.map((feature) => (
-              <div key={feature.name} className="text-center">
-                <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-warm-100 flex items-center justify-center">
-                  {feature.icon}
-                </div>
-                <h3 className="font-semibold text-warm-800 mb-1">{feature.name}</h3>
-                <p className="text-sm text-neutral-500">{feature.description}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
