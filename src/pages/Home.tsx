@@ -4,29 +4,6 @@ import { useProducts, useCategories } from '@/hooks/useProducts';
 import { ArrowRight, Star, Truck, Shield, Clock, Award } from 'lucide-react';
 import { ProductCard } from '@/components/products/ProductCard';
 
-const features = [
-  {
-    name: 'Free Shipping',
-    description: 'On orders over $50',
-    icon: <Truck className="w-6 h-6 text-warm-600" />,
-  },
-  {
-    name: 'Secure Payment',
-    description: '100% protected',
-    icon: <Shield className="w-6 h-6 text-warm-600" />,
-  },
-  {
-    name: 'Fast Delivery',
-    description: '2-3 business days',
-    icon: <Clock className="w-6 h-6 text-warm-600" />,
-  },
-  {
-    name: 'Quality Guarantee',
-    description: 'Certified products',
-    icon: <Award className="w-6 h-6 text-warm-600" />,
-  },
-];
-
 const HomePage = () => {
   const { data: products = [], isLoading } = useProducts();
   const { data: categories = [] } = useCategories();
