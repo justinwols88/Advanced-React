@@ -16,6 +16,9 @@ const WishlistPage: React.FC = () => {
       title: item.title,
       price: item.price,
       image: item.image,
+      description: '',
+      category: item.category,
+      rating: { rate: 0, count: 0 },
       quantity: 1,
     }));
   };

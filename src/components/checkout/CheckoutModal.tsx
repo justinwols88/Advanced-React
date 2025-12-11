@@ -73,18 +73,3 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
 };
 
 export default CheckoutModal;
-                        </Button>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
-        </div>
-      </Dialog>
-    </Transition>
-  );
-};
-
-export { CheckoutModal };
