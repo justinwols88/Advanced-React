@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useCart } from '@/hooks/useCart';
+import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/common/Button';
-import { ShoppingCart, Search, Menu, X, Sparkles } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, Sparkles, User } from 'lucide-react';
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
   const { totalItems } = useCart();
+  const { user } = useAuth();
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -77,6 +79,21 @@ const Header: React.FC = () => {
             >
               <Search className="h-5 w-5" />
             </Button>
+
+            {/* User Account Button */}
+            <Link to="/auth" aria-label="Account" title={user ? user.email || 'Account' : 'Login / Register'}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="relative h-10 w-10 p-0"
+                aria-label="Account"
+              >
+                <User className="h-5 w-5" />
+                {user && (
+                  <span className="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full bg-green-500" />
+                )}
+              </Button>
+            </Link>
 
             {/* Cart Button */}
             <Link to="/cart" aria-label="View shopping cart" title="Shopping Cart">
