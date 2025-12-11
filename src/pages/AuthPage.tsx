@@ -20,7 +20,7 @@ const AuthPage: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 py-12 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Welcome to Tech Gear!</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Welcome in your Tech advantage with Justin's Tech Store</h1>
           <p className="text-gray-600">Sign in to access your account and start shopping</p>
         </div>
 
