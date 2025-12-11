@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/common/Button';
-import { ShoppingCart, Search, Menu, X, Sparkles, User, Heart, Package } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, Sparkles, User, Heart, Package, ListTodo } from 'lucide-react';
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -25,6 +25,7 @@ const Header: React.FC = () => {
     { name: 'Profile', href: '/profile', icon: User },
     { name: 'Orders', href: '/orders', icon: Package },
     { name: 'Wishlist', href: '/wishlist', icon: Heart },
+    { name: 'Tasks', href: '/tasks', icon: ListTodo },
   ];
 
   const isActive = (path: string) => {

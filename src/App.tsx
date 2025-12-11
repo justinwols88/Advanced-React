@@ -16,6 +16,7 @@ import ProfilePage from '@/pages/ProfilePage';
 import OrdersPage from '@/pages/OrdersPage';
 import WishlistPage from '@/pages/WishlistPage';
 import AdminProductsPage from '@/pages/AdminProductsPage';
+import TaskManagerPage from '@/pages/TaskManagerPage';
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,13 @@ function AppContent() {
           <Route path="/admin/products" element={
             <ProtectedRoute>
               <AdminProductsPage />
+            </ProtectedRoute>
+          } />
+          
+          {/* Task Manager */}
+          <Route path="/tasks" element={
+            <ProtectedRoute>
+              <TaskManagerPage />
             </ProtectedRoute>
           } />
         </Routes>
