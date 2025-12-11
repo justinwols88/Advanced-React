@@ -1,16 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { CartItem as CartItemType } from '@/types/product.types';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '@/hooks/useCart';
+import { useAuth } from '@/hooks/useAuth';
 import { clearCart, updateQuantity, removeFromCart } from '@/store/cartSlice';
+import { saveCartToFirestore } from '@/services/firestore';
 import { Button } from '@/components/common/Button';
 import { CartItem } from '@/components/cart/CartItem';
+import CheckoutModal from '@/components/checkout/CheckoutModal';
 
 
 const CartPage: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const { items, totalPrice, totalItems } = useCart();
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+
+  // Save cart to Firestore whenever it changes
+  React.useEffect(() => {
+    if (user && items.length > 0) {
+      saveCartToFirestore(user.uid, items).catch(console.error);
+    }
+  }, [user, items]);
+
+  const handleCheckout = () => {
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+    setCheckoutOpen(true);
+  };
+
+  const handleCheckoutComplete = () => {
+    dispatch(clearCart());
+    setCheckoutOpen(false);
+  };
 
   if (items.length === 0) {
     return (
@@ -76,14 +102,11 @@ const CartPage: React.FC = () => {
             </div>
             
             <Button
-              onClick={() => {
-                dispatch(clearCart());
-                alert('Order placed successfully!');
-              }}
+              onClick={handleCheckout}
               variant="primary"
               className="w-full mb-4"
             >
-              Checkout
+              {user ? 'Proceed to Checkout' : 'Login to Checkout'}
             </Button>
             
             <Link to="/">
@@ -94,6 +117,14 @@ const CartPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <CheckoutModal
+        isOpen={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        onComplete={handleCheckoutComplete}
+        totalPrice={totalPrice * 1.1}
+        cartItems={items}
+      />
     </div>
   );
 };
