@@ -48,7 +48,6 @@ function AppContent() {
         } />
       </Routes>
     </Layout>
-    </>
   );
 }
 
