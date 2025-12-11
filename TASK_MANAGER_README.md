@@ -17,7 +17,7 @@ A complete CRUD task management system built with Firebase Firestore, React, and
 
 ## 🗂️ Project Structure
 
-```
+``` filetree
 src/
 ├── services/
 │   └── firestoreTasks.ts          # Firestore CRUD operations
@@ -134,6 +134,7 @@ const { tasks, loading } = useTasksByStatus('pending');
 ### TaskCard
 
 Displays individual task with:
+
 - Completion toggle
 - Priority badge with color coding
 - Status badge
@@ -145,6 +146,7 @@ Displays individual task with:
 ### TaskForm
 
 Modal form for creating/editing tasks:
+
 - Title input (required)
 - Description textarea
 - Status dropdown
@@ -156,6 +158,7 @@ Modal form for creating/editing tasks:
 ### TaskManagerPage
 
 Main dashboard featuring:
+
 - Statistics cards (Total, Pending, In Progress, Completed)
 - Filter controls (status and priority)
 - Task list with all TaskCards
@@ -190,16 +193,19 @@ service cloud.firestore {
 ## 🎯 Features Breakdown
 
 ### Priority Color Coding
+
 - **High**: Red (bg-red-100, text-red-700)
 - **Medium**: Yellow (bg-yellow-100, text-yellow-700)
 - **Low**: Green (bg-green-100, text-green-700)
 
 ### Status Color Coding
+
 - **Completed**: Green background (bg-green-50)
 - **In Progress**: Blue background (bg-blue-50)
 - **Pending**: Gray background (bg-gray-50)
 
 ### Overdue Detection
+
 Tasks with due dates in the past show a red alert badge with an alert icon.
 
 ## 📝 Example Usage
@@ -274,6 +280,7 @@ function MyComponent() {
 ## 🎉 Summary
 
 You now have a fully functional task manager with:
+
 - ✅ Complete CRUD operations
 - ✅ User-specific tasks with authentication
 - ✅ Beautiful, responsive UI

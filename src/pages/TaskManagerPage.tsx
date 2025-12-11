@@ -127,6 +127,7 @@ const TaskManagerPage: React.FC = () => {
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as any)}
               className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              aria-label="Filter tasks by status"
             >
               <option value="all">All Status</option>
               <option value="pending">Pending</option>
@@ -138,6 +139,7 @@ const TaskManagerPage: React.FC = () => {
               value={filterPriority}
               onChange={(e) => setFilterPriority(e.target.value as any)}
               className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              aria-label="Filter tasks by priority"
             >
               <option value="all">All Priorities</option>
               <option value="high">High Priority</option>
