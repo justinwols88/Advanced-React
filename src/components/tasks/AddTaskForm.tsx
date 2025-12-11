@@ -157,8 +157,6 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ onTaskAdded, className = '' }
             placeholder="Enter task title..."
             disabled={isSubmitting}
             maxLength={100}
-            aria-invalid={!!errors.title}
-            aria-describedby={errors.title ? 'title-error' : undefined}
           />
           {errors.title && (
             <p id="title-error" className="mt-1 text-sm text-red-600">
@@ -192,8 +190,6 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ onTaskAdded, className = '' }
             placeholder="Enter task description (optional)..."
             disabled={isSubmitting}
             maxLength={500}
-            aria-invalid={!!errors.description}
-            aria-describedby={errors.description ? 'description-error' : undefined}
           />
           {errors.description && (
             <p id="description-error" className="mt-1 text-sm text-red-600">

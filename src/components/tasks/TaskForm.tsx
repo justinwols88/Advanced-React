@@ -59,6 +59,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel }) 
           type="button"
           onClick={onCancel}
           className="text-gray-400 hover:text-gray-600"
+          aria-label="Close form"
         >
           <X className="w-6 h-6" />
         </button>
@@ -105,6 +106,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel }) 
             value={formData.status}
             onChange={(e) => setFormData({ ...formData, status: e.target.value as Task['status'] })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+            aria-label="Task status"
           >
             <option value="pending">Pending</option>
             <option value="in-progress">In Progress</option>
@@ -120,6 +122,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel }) 
             value={formData.priority}
             onChange={(e) => setFormData({ ...formData, priority: e.target.value as Task['priority'] })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+            aria-label="Task priority"
           >
             <option value="low">Low</option>
             <option value="medium">Medium</option>
@@ -129,20 +132,22 @@ export const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel }) 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+        <label htmlFor="task-due-date" className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
           <Calendar className="w-4 h-4" />
           Due Date
         </label>
         <input
+          id="task-due-date"
           type="date"
           value={formData.dueDate}
           onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          aria-label="Task due date"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+        <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1">
           <Tag className="w-4 h-4" />
           Tags (comma-separated)
         </label>
