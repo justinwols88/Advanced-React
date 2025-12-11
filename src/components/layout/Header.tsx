@@ -26,6 +26,7 @@ const Header: React.FC = () => {
     { name: 'Orders', href: '/orders', icon: Package },
     { name: 'Wishlist', href: '/wishlist', icon: Heart },
     { name: 'Tasks', href: '/tasks', icon: ListTodo },
+    { name: 'Simple Tasks', href: '/tasks-simple', icon: ListTodo },
   ];
 
   const isActive = (path: string) => {

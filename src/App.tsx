@@ -17,6 +17,7 @@ import OrdersPage from '@/pages/OrdersPage';
 import WishlistPage from '@/pages/WishlistPage';
 import AdminProductsPage from '@/pages/AdminProductsPage';
 import TaskManagerPage from '@/pages/TaskManagerPage';
+import TasksSimplePage from '@/pages/TasksSimplePage';
 
 const queryClient = new QueryClient();
 
@@ -63,6 +64,13 @@ function AppContent() {
           <Route path="/tasks" element={
             <ProtectedRoute>
               <TaskManagerPage />
+            </ProtectedRoute>
+          } />
+          
+          {/* Simple Task Manager */}
+          <Route path="/tasks-simple" element={
+            <ProtectedRoute>
+              <TasksSimplePage />
             </ProtectedRoute>
           } />
         </Routes>
