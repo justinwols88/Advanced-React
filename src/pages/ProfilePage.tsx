@@ -60,6 +60,42 @@ const ProfilePage: React.FC = () => {
       )}
 
       <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 space-y-6">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="flex items-center gap-2">
+                <User className="w-4 h-4" />
+                First Name
+              </div>
+            </label>
+            <input
+              type="text"
+              value={profile.firstName || ''}
+              onChange={(e) => setProfile({ ...profile, firstName: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              placeholder="John"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="flex items-center gap-2">
+                <User className="w-4 h-4" />
+                Last Name
+              </div>
+            </label>
+            <input
+              type="text"
+              value={profile.lastName || ''}
+              onChange={(e) => setProfile({ ...profile, lastName: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              placeholder="Doe"
+              required
+            />
+          </div>
+        </div>
+
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             <div className="flex items-center gap-2">

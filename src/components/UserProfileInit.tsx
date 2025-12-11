@@ -10,8 +10,10 @@ export const UserProfileInit: React.FC = () => {
       if (user) {
         try {
           const profile = await getUserProfile(user.uid);
+          // Only auto-create profile if it doesn't exist (for legacy users)
+          // New users will have profile created during registration
           if (!profile) {
-            await createUserProfile(user.uid, user.email || '');
+            await createUserProfile(user.uid, user.email || '', 'User', 'Account');
           }
         } catch (error) {
           console.error('Error initializing user profile:', error);
