@@ -39,7 +39,6 @@ const DisplayData: React.FC = () => {
       {users.map((user) => (
         <div
           key={user.id}
-          style={{ border: '2px solid black', margin: '10px' }}
         >
           <div>
             <p>Name: {user.name}</p>

@@ -122,8 +122,9 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ cartItems, total, on
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+              <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">Country</label>
               <input
+                id="country"
                 type="text"
                 required
                 value={shippingAddress.country}

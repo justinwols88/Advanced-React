@@ -5,7 +5,9 @@ This project now includes Firebase Firestore for data persistence and management
 ## Features Added
 
 ### 1. **Firestore Product Management** (`src/services/firestoreProducts.ts`)
+
 Complete CRUD operations for products:
+
 - ✅ `getFirestoreProducts()` - Fetch all products or by category
 - ✅ `getFirestoreProduct(id)` - Get single product by ID
 - ✅ `addFirestoreProduct()` - Add new product
@@ -17,13 +19,16 @@ Complete CRUD operations for products:
 - ✅ `seedFirestoreProducts()` - Seed database from external API
 
 ### 2. **Custom React Hooks** (`src/hooks/useFirestoreProducts.ts`)
+
 - `useFirestoreProducts(category?)` - Fetch products with loading/error states
 - `useFirestoreProduct(id)` - Fetch single product
 - `useSearchFirestoreProducts()` - Search with debouncing
 - `useFirestoreProductsByCategory()` - Category-filtered products
 
 ### 3. **Admin Dashboard** (`src/pages/AdminProductsPage.tsx`)
+
 Protected admin page at `/admin/products` with:
+
 - 📊 View all products in Firestore
 - ⬇️ Seed products from FakeStore API
 - 🗑️ Delete products
@@ -31,13 +36,15 @@ Protected admin page at `/admin/products` with:
 - 📈 Product count and statistics
 
 ### 4. **Utilities** (`src/utils/seedFirestore.ts`)
+
 - `seedProductsFromAPI()` - Import products from FakeStore API
 - `checkFirestoreProducts()` - Check if database has products
 
 ## Firestore Collections
 
 ### Products Collection
-```
+
+``` postman
 products/
   {productId}/
     - title: string
@@ -53,6 +60,7 @@ products/
 ```
 
 ### Existing Collections
+
 - `users/` - User profiles
 - `carts/` - Shopping carts
 - `wishlists/` - User wishlists
@@ -61,9 +69,11 @@ products/
 ## Getting Started
 
 ### 1. Seed Products to Firestore
+
 Visit `/admin/products` and click "Seed Products from API" to import all products from FakeStore API into your Firestore database.
 
 ### 2. Switch to Firestore Data (Optional)
+
 To use Firestore instead of FakeStore API, update your components to use the Firestore hooks:
 
 ```typescript
@@ -78,6 +88,7 @@ const { products, loading, error } = useFirestoreProducts();
 ```
 
 ### 3. Admin Access
+
 - Navigate to `/admin/products` to manage your Firestore products
 - Requires authentication (protected route)
 
@@ -126,7 +137,6 @@ service cloud.firestore {
       allow read: if true;
       allow write: if request.auth != null;
     }
-    
     // Other collections...
   }
 }
