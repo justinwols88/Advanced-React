@@ -3,14 +3,19 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/services/api';
 import { useCart } from '@/hooks/useCart';
+import { useWishlist } from '@/hooks/useWishlist';
+import { useAuth } from '@/hooks/useAuth';
 import { Loader } from '@/components/common/Loader';
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 import { Button } from '@/components/common/Button';
+import { Heart, ShoppingCart } from 'lucide-react';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { addToCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   
   const { data: product, isLoading, error } = useQuery({
     queryKey: ['product', id],
@@ -38,6 +43,27 @@ const ProductDetail = () => {
   const handleAddToCart = () => {
     addToCart({ ...product, quantity: 1 });
   };
+
+  const handleWishlistToggle = () => {
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+        category: product.category,
+      });
+    }
+  };
+
+  const inWishlist = isInWishlist(product.id);
 
   return (
     <div className="container mx-auto px-4 py-8">

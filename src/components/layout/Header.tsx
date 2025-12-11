@@ -3,11 +3,12 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/common/Button';
-import { ShoppingCart, Search, Menu, X, Sparkles, User } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, Sparkles, User, Heart, Package } from 'lucide-react';
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const location = useLocation();
   const { totalItems } = useCart();
   const { user } = useAuth();
@@ -15,9 +16,15 @@ const Header: React.FC = () => {
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Electronics', href: '/category/electronics' },
-    { name: 'Jewelery', href: '/category/jewelery' },
-    { name: "Men's Clothing", href: "/category/men's clothing" },
-    { name: "Women's Clothing", href: "/category/women's clothing" },
+    { name: 'Jewelry', href: '/category/jewelery' },
+    { name: "Men's Clothing", href: '/category/men\'s clothing' },
+    { name: "Women's Clothing", href: '/category/women\'s clothing' },
+  ];
+
+  const userNavigation = [
+    { name: 'Profile', href: '/profile', icon: User },
+    { name: 'Orders', href: '/orders', icon: Package },
+    { name: 'Wishlist', href: '/wishlist', icon: Heart },
   ];
 
   const isActive = (path: string) => {
@@ -80,20 +87,50 @@ const Header: React.FC = () => {
               <Search className="h-5 w-5" />
             </Button>
 
-            {/* User Account Button */}
-            <Link to="/auth" aria-label="Account" title={user ? user.email || 'Account' : 'Login / Register'}>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="relative h-10 w-10 p-0"
-                aria-label="Account"
+            {/* User Account Dropdown */}
+            {user ? (
+              <div 
+                className="relative" 
+                onMouseEnter={() => setUserMenuOpen(true)} 
+                onMouseLeave={() => setUserMenuOpen(false)}
               >
-                <User className="h-5 w-5" />
-                {user && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="relative h-10 w-10 p-0"
+                  aria-label="Account menu"
+                  title={user.email || 'Account'}
+                >
+                  <User className="h-5 w-5" />
                   <span className="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full bg-green-500" />
+                </Button>
+                {userMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-100 py-1 z-50">
+                    {userNavigation.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      >
+                        <item.icon className="h-4 w-4" />
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
                 )}
-              </Button>
-            </Link>
+              </div>
+            ) : (
+              <Link to="/auth" aria-label="Account" title="Login / Register">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="relative h-10 w-10 p-0"
+                  aria-label="Account"
+                >
+                  <User className="h-5 w-5" />
+                </Button>
+              </Link>
+            )}
 
             {/* Cart Button */}
             <Link to="/cart" aria-label="View shopping cart" title="Shopping Cart">
