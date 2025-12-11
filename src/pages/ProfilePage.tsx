@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
-import { getUserProfile, updateUserProfile, UserProfile } from '@/services/firestore';
-import { User, MapPin, Phone, Mail, Save } from 'lucide-react';
+import { getUserProfile, updateUserProfile, deleteUserAccount, UserProfile } from '@/services/firestore';
+import { User, MapPin, Phone, Mail, Save, Trash2, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/common/Button';
+import { deleteUser } from 'firebase/auth';
 
 const ProfilePage: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState<Partial<UserProfile>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -42,6 +47,28 @@ const ProfilePage: React.FC = () => {
       console.error('Error updating profile:', error);
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!user) return;
+
+    setDeleting(true);
+    try {
+      // Delete user data from Firestore
+      await deleteUserAccount(user.uid);
+      
+      // Delete Firebase Auth account
+      await deleteUser(user);
+      
+      // Redirect to home
+      navigate('/');
+    } catch (error: any) {
+      console.error('Error deleting account:', error);
+      alert('Failed to delete account: ' + error.message);
+    } finally {
+      setDeleting(false);
+      setShowDeleteModal(false);
     }
   };
 
@@ -245,6 +272,58 @@ const ProfilePage: React.FC = () => {
           {saving ? 'Saving...' : 'Save Profile'}
         </Button>
       </form>
+
+      {/* Delete Account Section */}
+      <div className="mt-8 bg-red-50 border border-red-200 rounded-lg p-6">
+        <h2 className="text-xl font-bold text-red-900 mb-2 flex items-center gap-2">
+          <AlertTriangle className="w-5 h-5" />
+          Danger Zone
+        </h2>
+        <p className="text-red-700 mb-4">
+          Once you delete your account, there is no going back. This will permanently delete your profile, cart, and wishlist.
+        </p>
+        <Button
+          variant="outline"
+          onClick={() => setShowDeleteModal(true)}
+          leftIcon={<Trash2 />}
+          className="border-red-300 text-red-700 hover:bg-red-100"
+        >
+          Delete Account
+        </Button>
+      </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <AlertTriangle className="w-8 h-8 text-red-600" />
+              <h3 className="text-xl font-bold text-gray-900">Delete Account?</h3>
+            </div>
+            <p className="text-gray-600 mb-6">
+              Are you absolutely sure? This action cannot be undone. All your data including profile, cart, and wishlist will be permanently deleted.
+            </p>
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                onClick={() => setShowDeleteModal(false)}
+                className="flex-1"
+                disabled={deleting}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                onClick={handleDeleteAccount}
+                className="flex-1 bg-red-600 hover:bg-red-700"
+                disabled={deleting}
+              >
+                {deleting ? 'Deleting...' : 'Delete Forever'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
