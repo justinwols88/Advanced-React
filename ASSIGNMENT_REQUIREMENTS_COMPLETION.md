@@ -14,14 +14,17 @@ All assignment requirements have been successfully implemented and tested.
 
 ## Part 1: Firebase Setup ✅ (20/20)
 
-### Requirements:
+### Requirements
+
 - ✅ Create a Firebase project in the Firebase console
 - ✅ Add E-commerce app to the Firebase project
 - ✅ Configure Firebase SDK in project
 - ✅ Enable Firebase Authentication and Firestore
 
-### Implementation:
-**File**: `src/firebaseConfig.ts`
+### Implementation
+
+#### File: `src/firebaseConfig.ts`
+
 ```typescript
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
@@ -45,16 +48,19 @@ export const db = getFirestore(app);
 
 ## Part 2: Firebase Authentication ✅ (20/20)
 
-### Requirements:
+### Requirements 2.0
+
 - ✅ Allow users to register with email/password
 - ✅ Create user document in Firestore on registration
 - ✅ Implement login with email/password
 - ✅ Add logout button
 
-### Implementation:
+### Implementation 2.0
 
 #### User Registration
-**File**: `src/components/auth/Register.tsx`
+
+##### File: `src/components/auth/Register.tsx`
+
 ```typescript
 const handleRegister = async (e: React.FormEvent) => {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -64,7 +70,9 @@ const handleRegister = async (e: React.FormEvent) => {
 ```
 
 #### Login & Logout
-**File**: `src/components/auth/Login.tsx`
+
+##### File: `src/components/auth/Login.tsx`
+
 ```typescript
 // Login
 await signInWithEmailAndPassword(auth, email, password);
@@ -73,7 +81,8 @@ await signInWithEmailAndPassword(auth, email, password);
 await signOut(auth);
 ```
 
-**Pages**: 
+#### Pages
+
 - Registration: `/auth` (Register tab)
 - Login: `/auth` (Login tab)
 - Logout: Available in user dropdown menu
@@ -84,16 +93,19 @@ await signOut(auth);
 
 ## Part 3: User Management ✅ (20/20)
 
-### Requirements:
+### Requirements 3.0
+
 - ✅ **Create**: Add user document when new user registers
 - ✅ **Read**: Fetch user data to display profile
 - ✅ **Update**: Allow users to edit profile (name, address, phone)
 - ✅ **Delete**: Let users delete their account and remove data
 
-### Implementation:
+### Implementation 3.0
 
 #### Create User
-**File**: `src/services/firestore.ts`
+
+##### File: `src/services/firestore.ts`
+
 ```typescript
 export const createUserProfile = async (uid: string, email: string, firstName: string, lastName: string) => {
   const userRef = doc(db, 'users', uid);
@@ -107,6 +119,7 @@ export const createUserProfile = async (uid: string, email: string, firstName: s
 ```
 
 #### Read User Profile
+
 ```typescript
 export const getUserProfile = async (uid: string): Promise<UserProfile | null> => {
   const userRef = doc(db, 'users', uid);
@@ -116,6 +129,7 @@ export const getUserProfile = async (uid: string): Promise<UserProfile | null> =
 ```
 
 #### Update User Profile
+
 ```typescript
 export const updateUserProfile = async (uid: string, data: Partial<UserProfile>) => {
   const userRef = doc(db, 'users', uid);
@@ -124,6 +138,7 @@ export const updateUserProfile = async (uid: string, data: Partial<UserProfile>)
 ```
 
 #### Delete User Account (NEW - Added to meet requirements)
+
 ```typescript
 export const deleteUserAccount = async (uid: string) => {
   // Delete user profile
@@ -138,6 +153,7 @@ export const deleteUserAccount = async (uid: string) => {
 ```
 
 **Page**: `/profile`
+
 - ✅ View profile information
 - ✅ Edit name, phone, address details
 - ✅ Delete account with confirmation modal
@@ -149,17 +165,19 @@ export const deleteUserAccount = async (uid: string) => {
 
 ## Part 4: Product Management ✅ (15/15)
 
-### Requirements:
+### Requirements 4.0
+
 - ✅ Create `products` collection in Firestore
 - ✅ Users can **fetch** all products from Firestore
 - ✅ Users can **Create** products
 - ✅ Users can **Update** products
 - ✅ Users can **Delete** products
 
-### Implementation:
+### Implementation 4.0
 
 #### Products Collection Structure
-```
+
+```postman
 products/
   {productId}/
     - title: string
@@ -173,9 +191,11 @@ products/
 ```
 
 #### CRUD Operations
-**File**: `src/services/firestoreProducts.ts`
 
-**Fetch Products**:
+##### File: `src/services/firestoreProducts.ts`
+
+#### Fetch Products
+
 ```typescript
 export const getFirestoreProducts = async (categoryFilter?: string): Promise<Product[]> => {
   const productsRef = collection(db, PRODUCTS_COLLECTION);
@@ -184,7 +204,8 @@ export const getFirestoreProducts = async (categoryFilter?: string): Promise<Pro
 }
 ```
 
-**Create Product** (NEW - User-facing):
+#### Create Product (NEW - User-facing)
+
 ```typescript
 export const addFirestoreProduct = async (product: Omit<Product, 'id'>): Promise<string> => {
   const productsRef = collection(db, PRODUCTS_COLLECTION);
@@ -197,7 +218,8 @@ export const addFirestoreProduct = async (product: Omit<Product, 'id'>): Promise
 }
 ```
 
-**Update Product**:
+#### Update Product
+
 ```typescript
 export const updateFirestoreProduct = async (id: number, updates: Partial<Product>) => {
   const productRef = doc(db, PRODUCTS_COLLECTION, id.toString());
@@ -205,7 +227,8 @@ export const updateFirestoreProduct = async (id: number, updates: Partial<Produc
 }
 ```
 
-**Delete Product**:
+#### Delete Product
+
 ```typescript
 export const deleteFirestoreProduct = async (id: number): Promise<void> => {
   const productRef = doc(db, PRODUCTS_COLLECTION, id.toString());
@@ -214,10 +237,13 @@ export const deleteFirestoreProduct = async (id: number): Promise<void> => {
 ```
 
 #### User Product Management Page (NEW)
-**File**: `src/pages/MyProductsPage.tsx`
-**Route**: `/my-products`
 
-**Features**:
+##### File: `src/pages/MyProductsPage.tsx`
+
+##### Route: `/my-products`
+
+#### Features
+
 - ✅ View all products in table format
 - ✅ **Create** new products via form (title, price, description, category, image)
 - ✅ **Edit** existing products inline
@@ -225,7 +251,9 @@ export const deleteFirestoreProduct = async (id: number): Promise<void> => {
 - ✅ Form validation
 - ✅ Success/error feedback
 
-**Navigation**: User dropdown → "My Products"
+#### Navigation
+
+User dropdown → "My Products"
 
 **Status**: ✅ Complete - Full CRUD for users implemented
 
@@ -233,17 +261,20 @@ export const deleteFirestoreProduct = async (id: number): Promise<void> => {
 
 ## Part 5: Order Management ✅ (20/20)
 
-### Requirements:
+### Requirements 5.0
+
 - ✅ Store orders in Firebase when users checkout
 - ✅ Order includes all products and user info
 - ✅ Users can access order history
 - ✅ Display cart ID, date, total price
 - ✅ View full order details including product list
 
-### Implementation:
+### Implementation 5.0
 
 #### Create Order
-**File**: `src/services/firestore.ts`
+
+##### File: `src/services/firestore.ts` 5.0
+
 ```typescript
 export const createOrder = async (order: Omit<Order, 'id' | 'createdAt' | 'updatedAt'>) => {
   const ordersRef = collection(db, 'orders');
@@ -261,11 +292,15 @@ export const createOrder = async (order: Omit<Order, 'id' | 'createdAt' | 'updat
 }
 ```
 
-**Triggered**: When user completes checkout in cart
+#### Triggered
+
+When user completes checkout in cart
 
 #### Order History
-**File**: `src/pages/OrdersPage.tsx`
-**Route**: `/orders`
+
+##### File: `src/pages/OrdersPage.tsx`
+
+##### Route: `/orders`
 
 ```typescript
 export const getUserOrders = async (uid: string): Promise<Order[]> => {
@@ -280,7 +315,8 @@ export const getUserOrders = async (uid: string): Promise<Order[]> => {
 }
 ```
 
-**Display Features**:
+#### Display Features
+
 - ✅ Order ID (first 8 characters, uppercase)
 - ✅ Creation date (formatted with date-fns)
 - ✅ Total price
@@ -288,7 +324,9 @@ export const getUserOrders = async (uid: string): Promise<Order[]> => {
 - ✅ Full product list with images, titles, quantities, prices
 - ✅ Expandable order details
 
-**Navigation**: User dropdown → "Orders"
+#### Navigation 5.0
+
+User dropdown → "Orders"
 
 **Status**: ✅ Complete - Full order management implemented
 
@@ -296,9 +334,9 @@ export const getUserOrders = async (uid: string): Promise<Order[]> => {
 
 ## 📁 File Structure
 
-### New/Modified Files for Assignment:
+### New/Modified Files for Assignment
 
-```
+```filetree
 src/
 ├── firebaseConfig.ts                    ✅ Firebase setup
 ├── services/
@@ -335,11 +373,13 @@ src/
 ## 🧪 Testing Checklist
 
 ### Part 1: Firebase Setup
+
 - [x] Firebase initialized successfully
 - [x] Authentication working
 - [x] Firestore connected
 
 ### Part 2: Authentication
+
 - [x] Can register new user with email/password
 - [x] User document created in Firestore on registration
 - [x] Can login with credentials
@@ -347,6 +387,7 @@ src/
 - [x] Protected routes redirect to login
 
 ### Part 3: User Management
+
 - [x] **Create**: User document created on registration
 - [x] **Read**: Profile page displays user data
 - [x] **Update**: Can edit firstName, lastName, phone, address
@@ -356,6 +397,7 @@ src/
 - [x] Delete removes cart and wishlist
 
 ### Part 4: Product Management
+
 - [x] Products collection exists in Firestore
 - [x] **Fetch**: Users can view all products
 - [x] **Create**: Users can add new products via `/my-products`
@@ -365,6 +407,7 @@ src/
 - [x] Success/error messages display
 
 ### Part 5: Order Management
+
 - [x] Orders stored when checkout completes
 - [x] Order includes userId
 - [x] Order includes all cart items
@@ -378,12 +421,14 @@ src/
 
 ## 🚀 How to Test Each Requirement
 
-### Part 1: Firebase Setup
+### Part 1: Firebase Setup 1.0
+
 1. Check `src/firebaseConfig.ts` exists
 2. Verify Firebase console shows project "fir-e10f8"
 3. Confirm Authentication and Firestore are enabled
 
-### Part 2: Authentication
+### Part 2: Authentication 2.0
+
 1. Navigate to `/auth`
 2. Click "Register" tab
 3. Fill in: firstName, lastName, email, password
@@ -392,7 +437,8 @@ src/
 6. Logout and login with same credentials
 7. Verify successful login
 
-### Part 3: User Management
+### Part 3: User Management 3.0
+
 1. Login and navigate to `/profile`
 2. Edit profile fields (name, phone, address)
 3. Click "Save Profile" → verify update
@@ -402,7 +448,8 @@ src/
 7. Verify user redirected to home
 8. Check Firestore: user document deleted
 
-### Part 4: Product Management
+### Part 4: Product Management 4.0
+
 1. Login and navigate to `/my-products`
 2. Click "Add New Product"
 3. Fill form: title, price, description, category, image URL
@@ -412,7 +459,8 @@ src/
 7. Click "Delete" and confirm → verify deletion
 8. Check Firestore: `products` collection updated
 
-### Part 5: Order Management
+### Part 5: Order Management 5.0
+
 1. Add products to cart
 2. Navigate to `/cart`
 3. Click "Proceed to Checkout"
@@ -431,6 +479,7 @@ src/
 ## 📊 Firestore Collections
 
 ### users
+
 ```javascript
 {
   uid: string,
@@ -448,6 +497,7 @@ src/
 ```
 
 ### products
+
 ```javascript
 {
   title: string,
@@ -464,6 +514,7 @@ src/
 ```
 
 ### orders
+
 ```javascript
 {
   userId: string,
@@ -479,6 +530,7 @@ src/
 ```
 
 ### carts
+
 ```javascript
 {
   items: CartItem[],
@@ -487,6 +539,7 @@ src/
 ```
 
 ### wishlists
+
 ```javascript
 {
   items: WishlistItem[],
@@ -506,12 +559,14 @@ All five parts of the assignment have been successfully completed:
 4. ✅ **Product Management** - Full user-facing CRUD operations
 5. ✅ **Order Management** - Orders saved and history displayed
 
-### Key Additions Made:
+### Key Additions Made
+
 1. **User Account Deletion** (`deleteUserAccount` function + UI)
 2. **User Product Management Page** (`MyProductsPage.tsx` at `/my-products`)
 3. **Complete Product CRUD for Users** (not just admins)
 
-### Build Status:
+### Build Status
+
 ✅ TypeScript compilation successful  
 ✅ Vite build completed (6.77s)  
 ✅ All changes committed and pushed to GitHub
@@ -530,4 +585,4 @@ All five parts of the assignment have been successfully completed:
 
 ---
 
-**End of Report**
+## End of Report

@@ -144,8 +144,10 @@ const MyProductsPage: React.FC = () => {
               {editingProduct ? 'Edit Product' : 'Create New Product'}
             </h2>
             <button
+              type="button"
               onClick={resetForm}
               className="text-gray-500 hover:text-gray-700"
+              aria-label="Close form"
             >
               <X className="w-6 h-6" />
             </button>
