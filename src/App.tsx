@@ -16,6 +16,7 @@ import ProfilePage from '@/pages/ProfilePage';
 import OrdersPage from '@/pages/OrdersPage';
 import WishlistPage from '@/pages/WishlistPage';
 import AdminProductsPage from '@/pages/AdminProductsPage';
+import MyProductsPage from '@/pages/MyProductsPage';
 import TaskManagerPage from '@/pages/TaskManagerPage';
 import TasksSimplePage from '@/pages/TasksSimplePage';
 
@@ -50,6 +51,13 @@ function AppContent() {
           <Route path="/wishlist" element={
             <ProtectedRoute>
               <WishlistPage />
+            </ProtectedRoute>
+          } />
+          
+          {/* User Product Management */}
+          <Route path="/my-products" element={
+            <ProtectedRoute>
+              <MyProductsPage />
             </ProtectedRoute>
           } />
           

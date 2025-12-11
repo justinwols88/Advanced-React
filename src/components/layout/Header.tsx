@@ -25,6 +25,7 @@ const Header: React.FC = () => {
     { name: 'Profile', href: '/profile', icon: User },
     { name: 'Orders', href: '/orders', icon: Package },
     { name: 'Wishlist', href: '/wishlist', icon: Heart },
+    { name: 'My Products', href: '/my-products', icon: Package },
     { name: 'Tasks', href: '/tasks', icon: ListTodo },
     { name: 'Simple Tasks', href: '/tasks-simple', icon: ListTodo },
   ];

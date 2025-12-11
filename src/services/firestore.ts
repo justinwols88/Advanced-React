@@ -3,6 +3,7 @@ import {
   setDoc, 
   getDoc, 
   updateDoc, 
+  deleteDoc,
   collection, 
   addDoc, 
   query, 
@@ -64,6 +65,27 @@ export const updateUserProfile = async (uid: string, data: Partial<UserProfile>)
     ...data,
     updatedAt: serverTimestamp(),
   });
+};
+
+export const deleteUserAccount = async (uid: string) => {
+  // Delete user profile
+  const userRef = doc(db, 'users', uid);
+  await deleteDoc(userRef);
+  
+  // Delete user's cart
+  const cartRef = doc(db, 'carts', uid);
+  await deleteDoc(cartRef);
+  
+  // Delete user's wishlist
+  const wishlistRef = doc(db, 'wishlists', uid);
+  await deleteDoc(wishlistRef);
+  
+  // Note: Orders are kept for record-keeping purposes
+  // If you want to delete orders too, uncomment below:
+  // const ordersRef = collection(db, 'orders');
+  // const q = query(ordersRef, where('userId', '==', uid));
+  // const snapshot = await getDocs(q);
+  // snapshot.forEach(async (doc) => await deleteDoc(doc.ref));
 };
 
 // Cart Management
