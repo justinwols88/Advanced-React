@@ -19,6 +19,8 @@ import { CartItem } from '@/types/cart.types';
 export interface UserProfile {
   uid: string;
   email: string;
+  firstName: string;
+  lastName: string;
   displayName?: string;
   phone?: string;
   address?: {
@@ -32,11 +34,14 @@ export interface UserProfile {
   updatedAt: Timestamp;
 }
 
-export const createUserProfile = async (uid: string, email: string) => {
+export const createUserProfile = async (uid: string, email: string, firstName: string, lastName: string) => {
   const userRef = doc(db, 'users', uid);
   const profile: Partial<UserProfile> = {
     uid,
     email,
+    firstName,
+    lastName,
+    displayName: `${firstName} ${lastName}`,
     createdAt: serverTimestamp() as Timestamp,
     updatedAt: serverTimestamp() as Timestamp,
   };
