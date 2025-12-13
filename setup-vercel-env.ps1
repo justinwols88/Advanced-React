@@ -16,4 +16,4 @@ Get-Content .env.production | Where-Object { $_ -match '^VITE_' } | ForEach-Obje
 }
 
 Write-Host "`nOr use the Vercel Dashboard:" -ForegroundColor Cyan
-Write-Host "https://vercel.com/dashboard → Your Project → Settings → Environment Variables`n" -ForegroundColor White
+Write-Host "https://vercel.com/dashboard -> Your Project -> Settings -> Environment Variables`n" -ForegroundColor White
