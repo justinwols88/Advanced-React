@@ -5,84 +5,111 @@
 ### Unit Tests (3 Components Tested)
 
 #### 1. **Pagination Component** (`src/components/Pagination.test.tsx`)
-   - **Rendering Tests:**
-     - ✅ Renders current page and total pages correctly
-     - ✅ Displays page numbers with proper styling
-   - **State Tests:**
-     - ✅ Disables previous button on first page
-     - ✅ Disables next button on last page
-   - **User Interaction Tests:**
-     - ✅ Calls onPageChange when clicking page numbers
-     - ✅ Shows ellipsis for large page ranges
-   - **Test Count:** 5 unit tests
-   - **Coverage:** Rendering, state changes, user interactions
+
+- **Rendering Tests:**
+
+  - ✅ Renders current page and total pages correctly
+  - ✅ Displays page numbers with proper styling
+
+- **State Tests:**
+
+  - ✅ Disables previous button on first page
+  - ✅ Disables next button on last page
+
+- **User Interaction Tests:**
+
+  - ✅ Calls onPageChange when clicking page numbers
+  - ✅ Shows ellipsis for large page ranges
+
+- **Test Count:** 5 unit tests
+- **Coverage:** Rendering, state changes, user interactions
 
 #### 2. **ProductCard Component** (`src/components/products/ProductCard.test.tsx`)
-   - **Rendering Tests:**
-     - ✅ Renders product information (title, price, category)
-     - ✅ Displays product image with correct attributes
-     - ✅ Shows rating information (rate and count)
-   - **User Interaction Tests:**
-     - ✅ Navigates to product detail page on click
-   - **Test Count:** 4 unit tests
-   - **Coverage:** Component rendering, props display, navigation
+
+- **Rendering Tests:**
+
+  - ✅ Renders product information (title, price, category)
+  - ✅ Displays product image with correct attributes
+  - ✅ Shows rating information (rate and count)
+
+- **User Interaction Tests:**
+
+  - ✅ Navigates to product detail page on click
+
+- **Test Count:** 4 unit tests
+- **Coverage:** Component rendering, props display, navigation
 
 #### 3. **Button Component** (`src/components/common/Button.test.tsx`) ⭐ NEW
-   - **Rendering Tests:**
-     - ✅ Renders button with text content
-     - ✅ Applies primary, secondary, outline variants
-     - ✅ Renders with left/right icons
-     - ✅ Applies custom className
-     - ✅ Renders different sizes (sm, md, lg)
-   - **State Tests:**
-     - ✅ Renders disabled state correctly
-   - **User Interaction Tests:**
-     - ✅ Handles single click events
-     - ✅ Does not call onClick when disabled
-     - ✅ Handles multiple rapid clicks
-   - **Test Count:** 11 unit tests
-   - **Coverage:** Rendering, state changes, user interactions, accessibility
+
+- **Rendering Tests:**
+
+  - ✅ Renders button with text content
+  - ✅ Applies primary, secondary, outline variants
+  - ✅ Renders with left/right icons
+  - ✅ Applies custom className
+  - ✅ Renders different sizes (sm, md, lg)
+
+- **State Tests:**
+
+  - ✅ Renders disabled state correctly
+
+- **User Interaction Tests:**
+
+  - ✅ Handles single click events
+  - ✅ Does not call onClick when disabled
+  - ✅ Handles multiple rapid clicks
+
+- **Test Count:** 11 unit tests
+- **Coverage:** Rendering, state changes, user interactions, accessibility
 
 ### Integration Tests
 
 #### **Cart Integration Test** (`src/components/cart/Cart.integration.test.tsx`) ⭐ NEW
-   - **Purpose:** Ensures the Cart gets updated when adding products
-   - **Test Scenarios:**
-     1. ✅ Updates cart when adding a product from ProductCard
-        - Verifies cart items count increases
-        - Verifies total items increases
-        - Verifies total price calculates correctly
-        - Verifies product appears in cart with correct quantity
-     
-     2. ✅ Updates cart when adding multiple quantities of same product
-        - Verifies quantities accumulate correctly
-        - Verifies total price multiplies correctly
-        - Verifies single cart item with updated quantity
-     
-     3. ✅ Updates cart with multiple different products
-        - Verifies multiple items appear in cart
-        - Verifies correct total calculation across items
-        - Verifies each product maintains its own quantity
-     
-     4. ✅ Persists cart state across component re-renders
-        - Verifies Redux state persistence
-        - Verifies cart data survives re-renders
-   
-   - **Test Count:** 4 integration tests
-   - **Technologies Used:** React Testing Library, userEvent
-   - **Coverage:** Component interaction, Redux state updates, data persistence
+
+- **Purpose:** Ensures the Cart gets updated when adding products
+- **Test Scenarios:**
+
+  1. ✅ Updates cart when adding a product from ProductCard
+
+     - Verifies cart items count increases
+     - Verifies total items increases
+     - Verifies total price calculates correctly
+     - Verifies product appears in cart with correct quantity
+
+  2. ✅ Updates cart when adding multiple quantities of same product
+
+     - Verifies quantities accumulate correctly
+     - Verifies total price multiplies correctly
+     - Verifies single cart item with updated quantity
+
+  3. ✅ Updates cart with multiple different products
+
+     - Verifies multiple items appear in cart
+     - Verifies correct total calculation across items
+     - Verifies each product maintains its own quantity
+
+  4. ✅ Persists cart state across component re-renders
+
+     - Verifies Redux state persistence
+     - Verifies cart data survives re-renders
+
+- **Test Count:** 4 integration tests
+- **Technologies Used:** React Testing Library, userEvent
+- **Coverage:** Component interaction, Redux state updates, data persistence
 
 ### Additional Existing Tests
 
 #### 4. **useCart Hook** (`src/hooks/useCart.test.tsx`)
-   - ✅ Initializes with empty cart
-   - ✅ Adds items to cart
-   - ✅ Removes items from cart
-   - ✅ Updates item quantities
-   - ✅ Clears entire cart
-   - **Test Count:** 5 unit tests
+
+- ✅ Initializes with empty cart
+- ✅ Adds items to cart
+- ✅ Removes items from cart
+- ✅ Updates item quantities
+- ✅ Clears entire cart
+- **Test Count:** 5 unit tests
 
 ### Test Summary
+
 - **Total Test Files:** 5
 - **Total Unit Tests:** 25+
 - **Total Integration Tests:** 4
@@ -99,6 +126,7 @@
 #### **CI Job: build-and-test**
 
 1. **Code Checkout**
+
    ```yaml
    - uses: actions/checkout@v4
    ```
@@ -106,43 +134,54 @@
 2. **Node.js Setup**
    - Version: 20.x
    - Uses npm cache for faster builds
+
    ```yaml
    - uses: actions/setup-node@v4
    ```
 
 3. **Dependency Installation**
+
    ```yaml
    - run: npm ci
    ```
+
    - Uses `npm ci` for clean, reproducible builds
 
 4. **Linting** (Optional)
+
    ```yaml
    - run: npm run lint --if-present
    ```
+
    - Continues on error (non-blocking)
 
 5. **Unit Tests Execution** ⭐
+
    ```yaml
    - run: npm test -- --run
    ```
+
    - Runs all Vitest unit and integration tests
    - **Fails workflow if tests fail**
    - Ensures code quality before build
 
 6. **Project Build**
+
    ```yaml
    - run: npm run build
    ```
+
    - TypeScript compilation
    - Vite production build
    - **Fails workflow if build fails**
 
 7. **E2E Tests** (Playwright)
+
    ```yaml
    - run: npx playwright install --with-deps
    - run: npm run test:e2e
    ```
+
    - Installs browser dependencies
    - Runs end-to-end tests
 
@@ -152,10 +191,12 @@
    - Retention: 7-30 days
 
 #### **CI Triggers**
+
 - **Push to main/master branch**
 - **Pull requests to main/master branch**
 
 #### **CI Failure Handling**
+
 - ❌ Workflow fails if any test fails
 - ❌ Workflow fails if build fails
 - ✅ Prevents deployment of faulty code
@@ -170,27 +211,34 @@
 #### **CD Job: deploy**
 
 1. **Job Dependencies**
+
    ```yaml
    needs: build-and-test
    ```
+
    - Only runs after CI tests pass ✅
    - Ensures quality before deployment
 
 2. **Conditional Execution**
+
    ```yaml
    if: (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main') && github.event_name == 'push'
    ```
+
    - Only deploys on main/master branch pushes
    - Skips deployment for PRs (uses preview instead)
 
 3. **Production Build**
+
    ```yaml
    - run: npm run build
    ```
+
    - Includes Firebase environment variables
    - Configured via GitHub Secrets
 
 4. **Vercel Deployment (Production)** ⭐
+
    ```yaml
    - uses: amondnet/vercel-action@v25
      with:
@@ -199,15 +247,18 @@
        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
        vercel-args: '--prod'
    ```
+
    - Deploys to Vercel production environment
    - Only runs on main/master branch
    - Requires Vercel secrets configuration
 
 5. **Vercel Deployment (Preview)**
+
    ```yaml
    - uses: amondnet/vercel-action@v25
      if: github.event_name == 'pull_request'
    ```
+
    - Creates preview deployment for PRs
    - Allows testing before merging
 
@@ -248,6 +299,7 @@ To enable Vercel deployment, configure these secrets in your repository:
 ## 🚀 Running Tests Locally
 
 ### Unit Tests
+
 ```bash
 # Run all tests once
 npm test -- --run
@@ -263,6 +315,7 @@ npm run test:coverage
 ```
 
 ### E2E Tests
+
 ```bash
 # Run Playwright tests
 npm run test:e2e
@@ -279,6 +332,7 @@ npm run test:e2e:report
 ## 📊 Test Coverage
 
 ### Component Coverage
+
 - ✅ Pagination: 100%
 - ✅ ProductCard: 100%
 - ✅ Button: 100%
@@ -286,11 +340,13 @@ npm run test:e2e:report
 - ✅ useCart Hook: 100%
 
 ### Test Types
+
 - Unit Tests: 25+ tests
 - Integration Tests: 4 tests
 - E2E Tests: Multiple scenarios
 
 ### Testing Best Practices Followed
+
 1. ✅ Tests are focused and test one thing
 2. ✅ Tests are independent (no shared state)
 3. ✅ Tests are deterministic (consistent results)
@@ -302,7 +358,7 @@ npm run test:e2e:report
 
 ## 🔄 CI/CD Workflow Diagram
 
-```
+``` git
 ┌─────────────────────────────────────────────────────────────┐
 │                     Code Push to GitHub                      │
 └───────────────────────┬─────────────────────────────────────┘
@@ -351,6 +407,7 @@ npm run test:e2e:report
 ### Test-Driven Development (TDD)
 
 - [x] **Unit Testing**
+
   - [x] At least two unit tests (we have 25+)
   - [x] Test component rendering (Pagination, ProductCard, Button)
   - [x] Test state changes (disabled states, variants, sizes)
@@ -360,6 +417,7 @@ npm run test:e2e:report
   - [x] Tests are deterministic ✅
 
 - [x] **Integration Testing**
+
   - [x] Cart update test when adding product ⭐
   - [x] Simulates user interactions (userEvent.click)
   - [x] Asserts resulting changes (cart totals, items)
@@ -368,6 +426,7 @@ npm run test:e2e:report
 ### Continuous Integration (CI)
 
 - [x] **GitHub Actions Workflow**
+
   - [x] Created `.github/workflows/main.yml` ✅
   - [x] Triggers on push to main/master branch ✅
   - [x] Uses GitHub Actions ✅
@@ -379,6 +438,7 @@ npm run test:e2e:report
 ### Continuous Deployment (CD)
 
 - [x] **Vercel Deployment**
+
   - [x] Extended GitHub Actions workflow ✅
   - [x] Defined deployment job (deploy) ✅
   - [x] Deploys to Vercel production ⭐
