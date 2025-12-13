@@ -17,10 +17,22 @@ playwright-report/
 test-results/
 .playwright/
 
-# Environment variables
+# Environment variables (contain secret keys)
 .env
 .env.local
 .env.*.local
+.env.development
+.env.production
+*.env
+
+# Vercel (contains project IDs and tokens)
+.vercel
+
+# Secret configuration files
+GITHUB_SECRETS_SETUP.md
+*secrets*.md
+firebase-config.json
+serviceAccountKey.json
 
 # Editor directories and files
 .vscode/*
@@ -32,6 +44,3 @@ test-results/
 *.njsproj
 *.sln
 *.sw?
-
-.vercel
-.env*.local
