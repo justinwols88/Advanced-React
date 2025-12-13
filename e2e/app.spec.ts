@@ -97,8 +97,8 @@ test.describe('E-commerce Application', () => {
     // Check if we're on category page
     await expect(page).toHaveURL(/\/category\/electronics/);
     
-    // Check if category heading is visible (be more specific)
-    await expect(page.getByRole('heading', { name: 'Category', level: 1 })).toBeVisible();
+    // Check if category heading is visible (category name, not the word "Category")
+    await expect(page.getByRole('heading', { name: /electronics/i })).toBeVisible();
   });
 
   test('should filter and paginate products', async ({ page }) => {
