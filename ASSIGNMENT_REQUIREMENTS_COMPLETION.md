@@ -31,10 +31,10 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDaAZjfE2DywqBezLQtGApSty-hfJNudwU",
-  authDomain: "fir-e10f8.firebaseapp.com",
-  projectId: "fir-e10f8",
-  // ... other config
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  // ... other config from environment variables
 };
 
 const app = initializeApp(firebaseConfig);
