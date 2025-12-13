@@ -6,6 +6,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
+  maxFailures: process.env.CI ? 10 : undefined,
   reporter: 'html',
   timeout: 60000, // Increase test timeout to 60 seconds
   use: {
@@ -35,5 +36,8 @@ export default defineConfig({
     command: 'npm run dev',
     url: 'http://localhost:5173',
     reuseExistingServer: !process.env.CI,
+    timeout: 120000, // 2 minutes for server to start
+    stdout: 'pipe',
+    stderr: 'pipe',
   },
 });

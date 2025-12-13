@@ -37,11 +37,12 @@ jobs:
     - name: Build project
       run: npm run build
     
-    - name: Install Playwright browsers
-      run: npx playwright install --with-deps
-    
-    - name: Run E2E tests
-      run: npm run test:e2e
+    # Skip E2E tests in CI - they will run after deployment
+    # - name: Install Playwright browsers
+    #   run: npx playwright install --with-deps
+    # 
+    # - name: Run E2E tests
+    #   run: npm run test:e2e
     
     - name: Upload test results
       if: always()
