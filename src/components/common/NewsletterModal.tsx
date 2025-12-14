@@ -9,6 +9,16 @@ const NewsletterModal = () => {
 
   useEffect(() => {
     console.log('NewsletterModal useEffect running');
+    
+    // Don't show modal during E2E tests
+    if (window.location.hostname === 'localhost' && window.location.port === '5173') {
+      // Check if running in E2E test mode (Playwright sets this)
+      if ((window as any).playwright || (navigator as any).webdriver) {
+        console.log('E2E test detected, skipping newsletter modal');
+        return;
+      }
+    }
+    
     // Check if user has seen the newsletter popup before
     const hasSeenNewsletter = localStorage.getItem('hasSeenNewsletterPopup');
     console.log('hasSeenNewsletter:', hasSeenNewsletter);

@@ -1,5 +1,22 @@
 import { test, expect } from '@playwright/test';
 
+// Helper function to dismiss newsletter modal if it appears
+async function dismissNewsletterModal(page: any) {
+  try {
+    // Wait for modal to appear (it shows after 2 seconds)
+    await page.waitForTimeout(2500);
+    
+    // Try to find and click the close button (X button)
+    const closeButton = page.locator('button[aria-label="Close"]').first();
+    if (await closeButton.isVisible({ timeout: 1000 })) {
+      await closeButton.click();
+      await page.waitForTimeout(300); // Wait for modal to close
+    }
+  } catch (error) {
+    // Modal might not appear, that's okay
+  }
+}
+
 test.describe('E-commerce Application', () => {
   test('should display homepage with products', async ({ page }) => {
     // Set up response listener before navigation
@@ -10,6 +27,9 @@ test.describe('E-commerce Application', () => {
     
     // Navigate
     await page.goto('/', { waitUntil: 'networkidle' });
+    
+    // Dismiss newsletter modal if it appears
+    await dismissNewsletterModal(page);
     
     // Wait for the products API call to complete
     await responsePromise;
@@ -33,6 +53,9 @@ test.describe('E-commerce Application', () => {
     );
     
     await page.goto('/', { waitUntil: 'networkidle' });
+    
+    // Dismiss newsletter modal if it appears
+    await dismissNewsletterModal(page);
     
     // Wait for the products API call to complete
     await responsePromise;
@@ -58,6 +81,9 @@ test.describe('E-commerce Application', () => {
     );
     
     await page.goto('/', { waitUntil: 'networkidle' });
+    
+    // Dismiss newsletter modal if it appears
+    await dismissNewsletterModal(page);
     
     // Wait for the products API call to complete
     await responsePromise;
@@ -87,6 +113,9 @@ test.describe('E-commerce Application', () => {
   test('should navigate between categories', async ({ page }) => {
     await page.goto('/', { waitUntil: 'networkidle' });
     
+    // Dismiss newsletter modal if it appears
+    await dismissNewsletterModal(page);
+    
     // Wait for categories to load
     await page.waitForSelector('a[href^="/category/"]', { timeout: 15000 });
     
@@ -103,6 +132,9 @@ test.describe('E-commerce Application', () => {
 
   test('should filter and paginate products', async ({ page }) => {
     await page.goto('/category/electronics');
+    
+    // Dismiss newsletter modal if it appears
+    await dismissNewsletterModal(page);
     
     // Wait for products to load
     await page.waitForLoadState('networkidle');
@@ -128,6 +160,9 @@ test.describe('E-commerce Application', () => {
     );
     
     await page.goto('/', { waitUntil: 'networkidle' });
+    
+    // Dismiss newsletter modal if it appears
+    await dismissNewsletterModal(page);
     
     // Wait for the products API call to complete
     await responsePromise;
@@ -169,6 +204,9 @@ test.describe('E-commerce Application', () => {
     );
     
     await page.goto('/', { waitUntil: 'networkidle' });
+    
+    // Dismiss newsletter modal if it appears
+    await dismissNewsletterModal(page);
     
     // Wait for the products API call to complete
     await responsePromise;
