@@ -74,10 +74,10 @@ const Header: React.FC = () => {
                 <Sparkles className="h-6 w-6 text-white" />
               </div>
               <div>
-                <span className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                <span className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent text-rose-800">
                   Tech Gear!
                 </span>
-                <p className="text-sm text-gray-500">Justin Wold's Premium Shopping Experience</p>
+                <p className="text-sm text-rose-800">Justin Wold's Premium Shopping Experience</p>
               </div>
             </Link>
           </div>

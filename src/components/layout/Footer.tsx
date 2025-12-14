@@ -64,7 +64,7 @@ const Footer = () => {
             <h3 className="font-semibold text-base text-gray-900 mb-5 pb-2 border-b border-gray-300">
               Shop
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-1.5">
               {shopLinks.map((link) => (
                 <li key={link.name}>
                   <Link
@@ -83,7 +83,7 @@ const Footer = () => {
             <h3 className="font-semibold text-base text-gray-900 mb-5 pb-2 border-b border-gray-300">
               Company
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-1.5">
               {companyLinks.map((link) => (
                 <li key={link.name}>
                   <Link
