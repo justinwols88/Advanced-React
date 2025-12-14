@@ -147,7 +147,7 @@ const Footer = () => {
       </div>
 
       {/* Payment Methods */}
-      <div className="border-t border-gray-300 bg-gray-100">
+      <div className="border-t border-gray-300 bg-gray-100 mt-8">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col items-center justify-center gap-4">
             <div className="flex items-center gap-4 text-gray-700">
