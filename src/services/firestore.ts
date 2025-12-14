@@ -117,25 +117,31 @@ export interface WishlistItem {
 }
 
 export const addToWishlist = async (uid: string, product: Omit<WishlistItem, 'addedAt'>) => {
+  console.log('Firestore addToWishlist called with:', { uid, product });
   const wishlistRef = doc(db, 'wishlists', uid);
   const wishlistSnap = await getDoc(wishlistRef);
   
   let items: WishlistItem[] = [];
   if (wishlistSnap.exists()) {
     items = wishlistSnap.data().items || [];
+    console.log('Existing wishlist items:', items);
   }
   
   // Check if already in wishlist
   if (!items.find(item => item.id === product.id)) {
     items.push({
       ...product,
-      addedAt: serverTimestamp() as Timestamp,
+      addedAt: Timestamp.now(),
     });
     
+    console.log('Saving wishlist with items:', items);
     await setDoc(wishlistRef, {
       items,
       updatedAt: serverTimestamp(),
     });
+    console.log('Wishlist saved successfully');
+  } else {
+    console.log('Product already in wishlist');
   }
 };
 

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useProducts, useCategories } from '@/hooks/useProducts';
 import { ArrowRight, Star, Truck, Shield, Clock, Award } from 'lucide-react';
 import { ProductCard } from '@/components/products/ProductCard';
@@ -30,11 +30,22 @@ const features = [
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
   const { data: products = [], isLoading } = useProducts(selectedCategory || undefined);
   const { data: categories = [] } = useCategories();
 
-  // Show only 4 products when no category is selected, show all when filtered
-  const displayProducts = selectedCategory ? products : products.slice(0, 4);
+  // Filter products by search query if present
+  const filteredProducts = searchQuery
+    ? products.filter(product =>
+        product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : products;
+
+  // Show only 4 products when no category or search is selected, show all when filtered
+  const displayProducts = selectedCategory || searchQuery ? filteredProducts : filteredProducts.slice(0, 4);
 
   return (
     <div className="min-h-screen bg-earth-50">
@@ -89,10 +100,18 @@ const HomePage = () => {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 gap-6">
             <div>
               <h2 className="text-3xl font-display font-bold text-warm-800 mb-2">
-                {selectedCategory ? 'Filtered Products' : 'Featured Products'}
+                {searchQuery 
+                  ? 'Search Results' 
+                  : selectedCategory 
+                    ? 'Filtered Products' 
+                    : 'Featured Products'}
               </h2>
               <p className="text-neutral-600">
-                {selectedCategory ? `Showing products in ${selectedCategory}` : 'Curated picks just for you'}
+                {searchQuery 
+                  ? `Showing results for "${searchQuery}" (${displayProducts.length} found)` 
+                  : selectedCategory 
+                    ? `Showing products in ${selectedCategory}` 
+                    : 'Curated picks just for you'}
               </p>
             </div>
             

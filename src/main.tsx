@@ -1,5 +1,5 @@
 // Initialize tracing first, before any other imports
-import './tracing';
+// import './tracing'; // Temporarily disabled due to version mismatch
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';

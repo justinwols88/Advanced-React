@@ -31,11 +31,17 @@ export const useWishlist = () => {
   }, [user]);
 
   const addToWishlist = async (product: Omit<WishlistItem, 'addedAt'>) => {
-    if (!user) return;
+    if (!user) {
+      console.log('No user logged in, cannot add to wishlist');
+      return;
+    }
 
+    console.log('Adding to wishlist:', product);
     try {
       await addToWishlistFirestore(user.uid, product);
+      console.log('Successfully added to Firestore');
       const updatedWishlist = await getWishlist(user.uid);
+      console.log('Updated wishlist:', updatedWishlist);
       setWishlist(updatedWishlist);
     } catch (error) {
       console.error('Error adding to wishlist:', error);

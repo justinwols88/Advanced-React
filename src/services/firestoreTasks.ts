@@ -35,6 +35,7 @@ export interface Task {
 // Get all tasks for a user
 export const getUserTasks = async (userId: string): Promise<Task[]> => {
   try {
+    console.log('Fetching tasks for user:', userId);
     const tasksRef = collection(db, TASKS_COLLECTION);
     const q = query(
       tasksRef,
@@ -53,9 +54,42 @@ export const getUserTasks = async (userId: string): Promise<Task[]> => {
       } as Task);
     });
 
+    console.log('Fetched tasks:', tasks.length, tasks);
     return tasks;
   } catch (error) {
     console.error('Error fetching tasks:', error);
+    console.error('Error details:', error);
+    // If the error is about missing index, try fetching without ordering
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'failed-precondition') {
+      console.log('Index error detected, fetching without ordering...');
+      try {
+        const tasksRef = collection(db, TASKS_COLLECTION);
+        const q = query(tasksRef, where('userId', '==', userId));
+        const querySnapshot = await getDocs(q);
+        const tasks: Task[] = [];
+        
+        querySnapshot.forEach((doc) => {
+          tasks.push({
+            id: doc.id,
+            ...doc.data(),
+            dueDate: doc.data().dueDate?.toDate(),
+          } as Task);
+        });
+        
+        // Sort manually
+        tasks.sort((a, b) => {
+          const aTime = a.createdAt ? (a.createdAt as Timestamp).toMillis() : 0;
+          const bTime = b.createdAt ? (b.createdAt as Timestamp).toMillis() : 0;
+          return bTime - aTime;
+        });
+        
+        console.log('Fetched tasks without ordering:', tasks.length, tasks);
+        return tasks;
+      } catch (fallbackError) {
+        console.error('Fallback fetch also failed:', fallbackError);
+        return [];
+      }
+    }
     return [];
   }
 };
@@ -83,14 +117,18 @@ export const getTask = async (taskId: string): Promise<Task | null> => {
 // Create a new task
 export const createTask = async (task: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> => {
   try {
+    console.log('Creating task with data:', task);
     const tasksRef = collection(db, TASKS_COLLECTION);
-    const docRef = await addDoc(tasksRef, {
+    const taskData = {
       ...task,
       dueDate: task.dueDate ? Timestamp.fromDate(task.dueDate as Date) : null,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
       completedAt: null,
-    });
+    };
+    console.log('Task data to be saved:', taskData);
+    const docRef = await addDoc(tasksRef, taskData);
+    console.log('Task created successfully with ID:', docRef.id);
     return docRef.id;
   } catch (error) {
     console.error('Error creating task:', error);

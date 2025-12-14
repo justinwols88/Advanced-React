@@ -1,8 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Heart, Eye, Star } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import type { Product } from '@/types/product.types';
+import { useWishlist } from '@/hooks/useWishlist';
+import { useAuth } from '@/hooks/useAuth';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '@/store/cartSlice';
 
 interface ProductCardProps {
   product: Product;
@@ -11,10 +15,38 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) => {
   const [isHovered, setIsHovered] = React.useState(false);
-  const [isLiked, setIsLiked] = React.useState(false);
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const dispatch = useDispatch();
+  
+  const isLiked = isInWishlist(product.id);
 
   const rating = product.rating?.rate || 0;
   const ratingCount = product.rating?.count || 0;
+
+  const handleWishlistToggle = () => {
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+
+    if (isLiked) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+        category: product.category,
+      });
+    }
+  };
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({ ...product, quantity: 1 }));
+  };
 
   return (
     <div
@@ -32,12 +64,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
         isHovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
       )}>
         <button
-          onClick={() => setIsLiked(!isLiked)}
+          onClick={handleWishlistToggle}
           className={cn(
             "w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-colors",
             isLiked 
-              ? "text-secondary-500 hover:text-secondary-600" 
-              : "text-neutral-400 hover:text-secondary-500"
+              ? "text-red-500 hover:text-red-600" 
+              : "text-neutral-400 hover:text-red-500"
           )}
           aria-label={isLiked ? "Remove from wishlist" : "Add to wishlist"}
         >
@@ -54,11 +86,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
 
       {/* Product Image */}
       <Link to={`/product/${product.id}`} className="block relative">
-        <div className="aspect-square bg-gradient-to-br from-neutral-50 to-neutral-100 flex items-center justify-center p-8">
+        <div className="aspect-square bg-gradient-to-br from-neutral-50 to-neutral-100 flex items-center justify-center p-4 sm:p-6 md:p-8">
           <img
             src={product.image}
             alt={product.title}
-            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+            className="max-w-full max-h-full w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-110"
             loading="lazy"
           />
         </div>
@@ -121,6 +153,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
           </div>
           
           <button
+            onClick={handleAddToCart}
             className={cn(
               "flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-300",
               isHovered

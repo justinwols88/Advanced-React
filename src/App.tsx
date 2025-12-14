@@ -18,7 +18,12 @@ import WishlistPage from '@/pages/WishlistPage';
 import AdminProductsPage from '@/pages/AdminProductsPage';
 import MyProductsPage from '@/pages/MyProductsPage';
 import TaskManagerPage from '@/pages/TaskManagerPage';
-import TasksSimplePage from '@/pages/TasksSimplePage';
+import AboutPage from '@/pages/AboutPage';
+import ContactPage from '@/pages/ContactPage';
+import CareerPage from '@/pages/CareerPage';
+import PrivacyPage from '@/pages/PrivacyPage';
+import TermsPage from '@/pages/TermsPage';
+import CookiesPage from '@/pages/CookiesPage';
 
 const queryClient = new QueryClient();
 
@@ -36,6 +41,12 @@ function AppContent() {
           <Route path="/category" element={<Navigate to="/" replace />} />
           <Route path="/category/:categoryId" element={<CategoryPage />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/career" element={<CareerPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/cookies" element={<CookiesPage />} />
           
           {/* Protected Routes */}
           <Route path="/profile" element={
@@ -72,13 +83,6 @@ function AppContent() {
           <Route path="/tasks" element={
             <ProtectedRoute>
               <TaskManagerPage />
-            </ProtectedRoute>
-          } />
-          
-          {/* Simple Task Manager */}
-          <Route path="/tasks-simple" element={
-            <ProtectedRoute>
-              <TasksSimplePage />
             </ProtectedRoute>
           } />
         </Routes>

@@ -25,7 +25,7 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     <img
       src={imgSrc}
       alt={alt}
-      className={className}
+      className={`max-w-full h-auto ${className || ''}`}
       onError={onError}
       {...props}
     />

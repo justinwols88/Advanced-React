@@ -44,10 +44,16 @@ export const useTasks = () => {
   }, [user]);
 
   const addTask = async (task: Omit<Task, 'id' | 'userId' | 'createdAt' | 'updatedAt'>) => {
-    if (!user) return;
+    if (!user) {
+      console.error('Cannot add task: No user logged in');
+      return;
+    }
 
     try {
-      await createTask({ ...task, userId: user.uid });
+      console.log('Adding task for user:', user.uid);
+      const taskId = await createTask({ ...task, userId: user.uid });
+      console.log('Task added with ID:', taskId);
+      console.log('Refreshing tasks...');
       await fetchTasks();
     } catch (err) {
       console.error('Error adding task:', err);

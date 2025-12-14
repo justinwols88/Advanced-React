@@ -2,16 +2,20 @@ import React, { useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
+import { useWishlist } from '@/hooks/useWishlist';
 import { Button } from '@/components/common/Button';
-import { ShoppingCart, Search, Menu, X, Sparkles, User, Heart, Package, ListTodo } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, Sparkles, User, Heart, Package, ListTodo, Mail } from 'lucide-react';
 
 const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [closeTimeout, setCloseTimeout] = useState<NodeJS.Timeout | null>(null);
   const location = useLocation();
   const { totalItems } = useCart();
   const { user } = useAuth();
+  const { wishlist } = useWishlist();
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -27,12 +31,36 @@ const Header: React.FC = () => {
     { name: 'Wishlist', href: '/wishlist', icon: Heart },
     { name: 'My Products', href: '/my-products', icon: Package },
     { name: 'Tasks', href: '/tasks', icon: ListTodo },
-    { name: 'Simple Tasks', href: '/tasks-simple', icon: ListTodo },
   ];
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
     return location.pathname.includes(path);
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      // Navigate to home page with search query
+      window.location.href = `/?search=${encodeURIComponent(searchQuery.trim())}`;
+      setSearchQuery('');
+      setSearchOpen(false);
+    }
+  };
+
+  const handleMouseEnter = () => {
+    if (closeTimeout) {
+      clearTimeout(closeTimeout);
+      setCloseTimeout(null);
+    }
+    setUserMenuOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setUserMenuOpen(false);
+    }, 200);
+    setCloseTimeout(timeout);
   };
 
   return (
@@ -49,7 +77,7 @@ const Header: React.FC = () => {
                 <span className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
                   Tech Gear!
                 </span>
-                <p className="text-sm text-gray-500">Premium Shopping</p>
+                <p className="text-sm text-gray-500">Justin Wold's Premium Shopping Experience</p>
               </div>
             </Link>
           </div>
@@ -94,8 +122,8 @@ const Header: React.FC = () => {
             {user ? (
               <div 
                 className="relative" 
-                onMouseEnter={() => setUserMenuOpen(true)} 
-                onMouseLeave={() => setUserMenuOpen(false)}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
                 <Button
                   variant="ghost"
@@ -103,20 +131,33 @@ const Header: React.FC = () => {
                   className="relative h-10 w-10 p-0"
                   aria-label="Account menu"
                   title={user.email || 'Account'}
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
                 >
                   <User className="h-5 w-5" />
                   <span className="absolute -top-1 -right-1 flex h-3 w-3 items-center justify-center rounded-full bg-green-500" />
                 </Button>
                 {userMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-100 py-1 z-50">
+                  <div 
+                    className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-100 py-1 z-50"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
                     {userNavigation.map((item) => (
                       <Link
                         key={item.name}
                         to={item.href}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        className="flex items-center justify-between px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        onClick={() => setUserMenuOpen(false)}
                       >
-                        <item.icon className="h-4 w-4" />
-                        {item.name}
+                        <div className="flex items-center gap-3">
+                          <item.icon className="h-4 w-4" />
+                          {item.name}
+                        </div>
+                        {item.name === 'Wishlist' && wishlist.length > 0 && (
+                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                            {wishlist.length}
+                          </span>
+                        )}
                       </Link>
                     ))}
                   </div>
@@ -174,15 +215,18 @@ const Header: React.FC = () => {
         {/* Search Bar */}
         {searchOpen && (
           <div className="py-4 animate-slide-down">
-            <div className="relative">
+            <form onSubmit={handleSearch} className="relative">
               <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search products..."
                 className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-12 pr-4 text-sm focus:border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
                 aria-label="Search products"
+                autoFocus
               />
-            </div>
+            </form>
           </div>
         )}
 
@@ -211,7 +255,8 @@ const Header: React.FC = () => {
                   </NavLink>
                 ))}
               </div>
-              <div className="mt-6 pt-6 border-t">
+              
+              <div className="mt-4">
                 <Link to="/cart" onClick={() => setMobileMenuOpen(false)}>
                   <Button variant="primary" className="w-full" leftIcon={<ShoppingCart />}>
                     View Cart ({totalItems} items)

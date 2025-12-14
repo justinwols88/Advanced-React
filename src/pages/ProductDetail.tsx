@@ -9,6 +9,7 @@ import { Loader } from '@/components/common/Loader';
 import { ImageWithFallback } from '@/components/common/ImageWithFallback';
 import { Button } from '@/components/common/Button';
 import { Heart, ShoppingCart } from 'lucide-react';
+import { cn } from '@/utils/cn';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -45,14 +46,22 @@ const ProductDetail = () => {
   };
 
   const handleWishlistToggle = () => {
+    console.log('Wishlist toggle clicked');
+    console.log('User:', user);
+    console.log('Product:', product);
+    console.log('Is in wishlist:', isInWishlist(product.id));
+    
     if (!user) {
+      console.log('No user, redirecting to auth');
       navigate('/auth');
       return;
     }
 
     if (isInWishlist(product.id)) {
+      console.log('Removing from wishlist');
       removeFromWishlist(product.id);
     } else {
+      console.log('Adding to wishlist');
       addToWishlist({
         id: product.id,
         title: product.title,
@@ -69,12 +78,12 @@ const ProductDetail = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Product Image */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="relative h-96">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
+          <div className="relative h-64 sm:h-80 md:h-96 flex items-center justify-center">
             <ImageWithFallback
               src={product.image}
               alt={product.title}
-              className="w-full h-full object-contain"
+              className="max-w-full max-h-full w-auto h-auto object-contain"
               fallbackSrc="https://via.placeholder.com/500?text=No+Image"
             />
           </div>
@@ -121,14 +130,28 @@ const ProductDetail = () => {
             </p>
           </div>
 
-          {/* Add to Cart Button */}
+          {/* Action Buttons */}
           <div className="space-y-4">
-            <Button
-              onClick={handleAddToCart}
-              className="w-full py-4 text-lg bg-blue-600 hover:bg-blue-700"
-            >
-              Add to Cart
-            </Button>
+            <div className="grid grid-cols-[1fr_auto] gap-4">
+              <Button
+                onClick={handleAddToCart}
+                className="py-4 text-lg bg-blue-600 hover:bg-blue-700"
+                leftIcon={<ShoppingCart />}
+              >
+                Add to Cart
+              </Button>
+              <Button
+                onClick={handleWishlistToggle}
+                variant={inWishlist ? "secondary" : "outline"}
+                className={cn(
+                  "px-6",
+                  inWishlist && "bg-red-50 border-red-200 hover:bg-red-100"
+                )}
+                aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
+              >
+                <Heart className={cn("w-6 h-6", inWishlist ? "fill-red-500 text-red-500" : "text-gray-600")} />
+              </Button>
+            </div>
             
             <div className="grid grid-cols-2 gap-4">
               <Button

@@ -33,6 +33,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel }) 
     setSubmitting(true);
 
     try {
+      console.log('Submitting task:', formData);
       await onSubmit({
         title: formData.title.trim(),
         description: formData.description.trim(),
@@ -41,9 +42,11 @@ export const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel }) 
         dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
         tags: formData.tags ? formData.tags.split(',').map(tag => tag.trim()).filter(Boolean) : [],
       });
+      console.log('Task submitted successfully');
       onCancel();
     } catch (err) {
-      setError('Failed to save task');
+      console.error('Task submission error:', err);
+      setError('Failed to save task. Please try again.');
     } finally {
       setSubmitting(false);
     }
