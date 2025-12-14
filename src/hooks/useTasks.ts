@@ -62,9 +62,12 @@ export const useTasks = () => {
   };
 
   const editTask = async (taskId: string, updates: Partial<Task>) => {
+    console.log('editTask called with taskId:', taskId, 'updates:', updates);
     try {
       await updateTask(taskId, updates);
+      console.log('Task updated, fetching tasks...');
       await fetchTasks();
+      console.log('Tasks refreshed successfully');
     } catch (err) {
       console.error('Error updating task:', err);
       throw err;

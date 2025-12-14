@@ -25,20 +25,29 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ cartItems, total, on
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
+    if (!user) {
+      console.log('No user logged in');
+      return;
+    }
 
+    console.log('Processing checkout for user:', user.uid);
+    console.log('Cart items:', cartItems);
+    console.log('Total:', total);
+    console.log('Shipping address:', shippingAddress);
+    
     setProcessing(true);
 
     try {
       // Create order in Firestore
-      await createOrder({
+      const orderId = await createOrder({
         userId: user.uid,
         items: cartItems,
         total,
         status: 'pending',
         shippingAddress,
       });
-
+      
+      console.log('Order created successfully with ID:', orderId);
       setSuccess(true);
       setTimeout(() => {
         onSuccess();

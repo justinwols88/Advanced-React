@@ -11,13 +11,17 @@ const OrdersPage: React.FC = () => {
 
   useEffect(() => {
     const loadOrders = async () => {
+      console.log('Loading orders, user:', user);
       if (user) {
         try {
           const userOrders = await getUserOrders(user.uid);
+          console.log('Loaded orders:', userOrders);
           setOrders(userOrders);
         } catch (error) {
           console.error('Error loading orders:', error);
         }
+      } else {
+        console.log('No user logged in');
       }
       setLoading(false);
     };

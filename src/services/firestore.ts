@@ -189,6 +189,7 @@ export interface Order {
 }
 
 export const createOrder = async (order: Omit<Order, 'id' | 'createdAt' | 'updatedAt'>) => {
+  console.log('Creating order:', order);
   const ordersRef = collection(db, 'orders');
   const orderData = {
     ...order,
@@ -197,29 +198,62 @@ export const createOrder = async (order: Omit<Order, 'id' | 'createdAt' | 'updat
     updatedAt: serverTimestamp(),
   };
   
+  console.log('Order data to save:', orderData);
   const docRef = await addDoc(ordersRef, orderData);
+  console.log('Order created with ID:', docRef.id);
   return docRef.id;
 };
 
 export const getUserOrders = async (uid: string): Promise<Order[]> => {
+  console.log('Fetching orders for user:', uid);
   const ordersRef = collection(db, 'orders');
-  const q = query(
-    ordersRef,
-    where('userId', '==', uid),
-    orderBy('createdAt', 'desc')
-  );
   
-  const querySnapshot = await getDocs(q);
-  const orders: Order[] = [];
-  
-  querySnapshot.forEach((doc) => {
-    orders.push({
-      id: doc.id,
-      ...doc.data(),
-    } as Order);
-  });
-  
-  return orders;
+  try {
+    const q = query(
+      ordersRef,
+      where('userId', '==', uid),
+      orderBy('createdAt', 'desc')
+    );
+    
+    const querySnapshot = await getDocs(q);
+    const orders: Order[] = [];
+    
+    querySnapshot.forEach((doc) => {
+      orders.push({
+        id: doc.id,
+        ...doc.data(),
+      } as Order);
+    });
+    
+    console.log('Orders found:', orders.length);
+    return orders;
+  } catch (error: any) {
+    // If the error is due to missing index, try without orderBy
+    if (error.code === 'failed-precondition' || error.message?.includes('index')) {
+      console.log('Index not found, fetching without ordering');
+      const q = query(ordersRef, where('userId', '==', uid));
+      const querySnapshot = await getDocs(q);
+      const orders: Order[] = [];
+      
+      querySnapshot.forEach((doc) => {
+        orders.push({
+          id: doc.id,
+          ...doc.data(),
+        } as Order);
+      });
+      
+      // Sort manually by createdAt
+      orders.sort((a, b) => {
+        const aTime = a.createdAt?.toMillis() || 0;
+        const bTime = b.createdAt?.toMillis() || 0;
+        return bTime - aTime;
+      });
+      
+      console.log('Orders found (manual sort):', orders.length);
+      return orders;
+    }
+    throw error;
+  }
 };
 
 export const getOrderById = async (orderId: string): Promise<Order | null> => {

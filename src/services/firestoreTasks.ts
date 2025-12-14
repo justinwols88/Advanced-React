@@ -142,15 +142,21 @@ export const updateTask = async (
   updates: Partial<Task>
 ): Promise<void> => {
   try {
+    console.log('Updating task:', taskId, 'with updates:', updates);
     const taskRef = doc(db, TASKS_COLLECTION, taskId);
     
+    // Remove fields that shouldn't be updated
+    const { id, userId, createdAt, ...safeUpdates } = updates as any;
+    
     const updateData: any = {
-      ...updates,
+      ...safeUpdates,
       updatedAt: serverTimestamp(),
     };
 
     if (updates.dueDate) {
-      updateData.dueDate = Timestamp.fromDate(updates.dueDate as Date);
+      updateData.dueDate = updates.dueDate instanceof Date 
+        ? Timestamp.fromDate(updates.dueDate) 
+        : updates.dueDate;
     }
 
     if (updates.status === 'completed' && !updates.completedAt) {
@@ -159,9 +165,13 @@ export const updateTask = async (
       updateData.completedAt = null;
     }
 
+    console.log('Final update data:', updateData);
     await updateDoc(taskRef, updateData);
+    console.log('Task updated successfully');
   } catch (error) {
     console.error('Error updating task:', error);
+    console.error('Task ID:', taskId);
+    console.error('Updates:', updates);
     throw error;
   }
 };
